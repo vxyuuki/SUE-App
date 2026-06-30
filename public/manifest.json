@@ -1,0 +1,16 @@
+{
+  "name": "SUE - Show Up Everyday",
+  "short_name": "SUE",
+  "description": "Aplikasi Pomodoro Timer untuk melacak produktivitas harian Anda dengan contribution graph, catatan, dan motivasi.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#0d1117",
+  "icons": [
+    {
+      "src": "vite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

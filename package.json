@@ -1,0 +1,38 @@
+{
+  "name": "show-up-everyday",
+  "version": "1.0.0",
+  "description": "SUE - Show Up Everyday | Pomodoro Productivity App",
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "desktop:dev": "concurrently -k \"vite\" \"wait-on tcp:3000 && cross-env VITE_DEV_SERVER_URL=http://localhost:3000 electron electron/main.cjs\"",
+    "desktop:build": "vite build && electron-builder",
+    "desktop:build-pack": "vite build && electron-packager . SUE --platform=win32 --arch=x64 --out=dist-electron --icon=icon.ico --overwrite"
+  },
+  "build": {
+    "appId": "com.sue.focustracker",
+    "productName": "SUE",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "win": {
+      "target": "nsis"
+    }
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.3",
+    "cross-env": "^10.1.0",
+    "electron": "^42.5.1",
+    "electron-builder": "^26.15.3",
+    "electron-packager": "^17.1.2",
+    "vite": "^6.3.5",
+    "wait-on": "^9.0.10"
+  }
+}

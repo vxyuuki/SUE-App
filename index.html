@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="SUE - Show Up Everyday. Aplikasi Pomodoro Timer untuk melacak produktivitas harian Anda dengan contribution graph, catatan, dan motivasi." />
+  <title>SUE — Show Up Everyday</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="AppHeader">
+    <div class="AppHeader-globalBar">
+      <div class="AppHeader-left">
+        <div class="AppHeader-logo">
+          <svg height="32" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="32" data-view-component="true"
+            class="octicon octicon-mark-github">
+            <path
+              d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z">
+            </path>
+          </svg>
+          <span class="AppHeader-title">SUE</span>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="AppHeader-search">
+          <svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M10.68 11.74a6 6 0 0 1-7.922-8.982 6 6 0 0 1 8.982 7.922l3.04 3.04a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215ZM11.5 7a4.499 4.499 0 1 0-8.997 0A4.499 4.499 0 0 0 11.5 7Z" />
+          </svg>
+          <span>Type <kbd>/</kbd> to search</span>
+        </div>
+
+        <!-- Nav Links -->
+        <nav class="AppHeader-nav">
+          <a href="#" class="AppHeader-nav-link header-nav-timer" data-view="timer">
+            <svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path
+                d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm7.25-4.25v4.25l3.25 3.25a.75.75 0 0 1-1.06 1.06l-3.5-3.5a.75.75 0 0 1-.22-.53V3.75a.75.75 0 0 1 1.5 0Z" />
+            </svg>
+            Timer
+          </a>
+          <a href="#" class="AppHeader-nav-link" data-view="notes">
+            <svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path
+                d="M0 3.75C0 2.784.784 2 1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25Zm1.75-.25a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25ZM3.5 6.25a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5a.75.75 0 0 1-.75-.75Zm.75 2.25h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5Z" />
+            </svg>
+            Catatan
+          </a>
+          <a href="#" class="AppHeader-nav-link" data-view="flashcards"><svg class="octicon mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2.5 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25V2.75a.25.25 0 0 0-.25-.25H2.5ZM.75 2.75C.75 1.784 1.534 1 2.5 1h10.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 13.0 15H2.5A1.75 1.75 0 0 1 .75 13.25V2.75Z" /></svg>Flashcards</a><a href="#" class="AppHeader-nav-link" data-view="settings">
+            <svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path
+                d="M8 0a8.2 8.2 0 0 1 .701.031C9.444.095 9.99.645 10.16 1.29l.288 1.107c.436.126.853.301 1.238.514l.951-.663c.535-.373 1.218-.328 1.666.166l1.248 1.381c.421.464.444 1.14.072 1.669l-.754 1.077c.143.376.242.775.29 1.189l1.104.286c.652.17 1.205.72 1.267 1.469l.063.766c.036.438.005.885-.094 1.312l-1.121.284a6.792 6.792 0 0 1-.29 1.19l.754 1.076c.371.53.349 1.205-.072 1.67l-1.248 1.38a1.328 1.328 0 0 1-1.666.167l-.951-.664a6.764 6.764 0 0 1-1.238.514l-.288 1.107c-.17.645-.716 1.195-1.46 1.259A8.196 8.196 0 0 1 8 16a8.196 8.196 0 0 1-.701-.031c-.744-.064-1.29-.614-1.46-1.259l-.288-1.107a6.764 6.764 0 0 1-1.238-.514l-.951.664a1.328 1.328 0 0 1-1.666-.167L.448 12.205c-.421-.464-.444-1.14-.072-1.67l.754-1.076a6.792 6.792 0 0 1-.29-1.19L-.265 7.985Z" />
+              <circle cx="8" cy="8" r="2" />
+            </svg>
+            Settings
+          </a>
+        </nav>
+      </div>
+
+      <div class="AppHeader-right">
+        <!-- Live Timer Status -->
+        <div class="AppHeader-timer-status" id="header-timer-status">
+          <span class="status-dot" id="header-status-dot"></span>
+          <span class="status-text" id="header-status-text">Idle</span>
+        </div>
+
+        <!-- Notification Bell -->
+        <button class="AppHeader-icon-btn" id="header-notif-btn" title="Notifications">
+          <svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M8 16a2 2 0 0 0 1.985-1.75c.017-.137-.097-.25-.235-.25h-3.5c-.138 0-.252.113-.235.25A2 2 0 0 0 8 16ZM3 5a5 5 0 0 1 10 0v2.947c0 .05.015.098.042.139l1.703 2.555A1.519 1.519 0 0 1 13.482 13H2.518a1.516 1.516 0 0 1-1.263-2.36l1.703-2.554A.255.255 0 0 0 3 7.947Zm5-3.5A3.5 3.5 0 0 0 4.5 5v2.947c0 .346-.102.683-.294.97l-1.703 2.556a.017.017 0 0 0-.003.01l.001.006c0 .002.002.004.004.006l.006.004.007.001h10.964l.007-.001.006-.004.004-.006.001-.007a.017.017 0 0 0-.003-.01l-1.703-2.554a1.745 1.745 0 0 1-.294-.97V5A3.5 3.5 0 0 0 8 1.5Z" />
+          </svg>
+          <span class="notif-count" id="header-notif-count" style="display:none;">0</span>
+        </button>
+
+        <!-- Create New -->
+        <button class="AppHeader-icon-btn" id="header-create-btn" title="Catatan Baru">
+          <svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M7.75 2a.75.75 0 0 1 .75.75V7h4.25a.75.75 0 0 1 0 1.5H8.5v4.25a.75.75 0 0 1-1.5 0V8.5H2.75a.75.75 0 0 1 0-1.5H7V2.75A.75.75 0 0 1 7.75 2Z" />
+          </svg>
+          <svg class="octicon dropdown-caret" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z" />
+          </svg>
+        </button>
+
+        <!-- User Avatar -->
+        <div class="AppHeader-user">
+          <img src="" alt="@user" id="header-avatar" class="avatar-user" width="32" height="32" style="display:none;">
+          <span id="header-avatar-fallback" class="avatar-user header-fallback">U</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="Layout">
+    <!-- Sidebar / Profile -->
+    <div class="Layout-sidebar">
+      <div class="vcard-names-container">
+        <div class="avatar-container" id="avatar-container">
+          <img class="avatar-image" id="avatar-image" alt="User Avatar" style="display:none;" />
+          <div class="avatar-fallback" id="avatar-fallback">U</div>
+          <button class="avatar-upload-btn" id="avatar-upload-btn" title="Upload Avatar">
+            Edit
+          </button>
+          <input type="file" id="avatar-file-input" accept="image/jpeg,image/png,image/webp,image/gif"
+            style="display:none;" />
+        </div>
+        <h1 class="vcard-names" style="display: flex; align-items: center; gap: 8px;">
+          <span class="p-name vcard-fullname" id="profile-name" contenteditable="true" spellcheck="false"
+            title="Klik untuk mengedit nama">User</span>
+          <svg class="octicon color-fg-muted" id="edit-name-icon" width="16" height="16" viewBox="0 0 16 16"
+            fill="currentColor" style="cursor:pointer;" title="Edit nama">
+            <path
+              d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm1.414 1.06a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354l-1.086-1.086ZM11.189 6.25 9.75 4.81l-6.286 6.287a.25.25 0 0 0-.064.108l-.558 1.953 1.953-.558a.249.249 0 0 0 .108-.064l6.286-6.286Z" />
+          </svg>
+        </h1>
+      </div>
+
+      <div class="profile-bio">
+        <div class="quote-text" id="quote-text">"Mulai dari yang kecil, tapi mulai sekarang."</div>
+        <div class="quote-author" id="quote-author">— Anonim</div>
+      </div>
+
+      <div class="border-top color-border-muted pt-3 mt-3">
+        <h2 class="h4 mb-2">Statistik Produktivitas</h2>
+        <ul class="list-style-none">
+          <li class="mb-1"><svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Z" />
+              <path d="M7.75 3.75a.75.75 0 0 1 1.5 0v5c0 .414-.336.75-.75.75H4.75a.75.75 0 0 1 0-1.5h3v-4.25Z" />
+            </svg> <span class="text-bold" id="stat-total-time">0j</span> Waktu Fokus</li>
+          <li class="mb-1"><svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8z"></path>
+              <path
+                d="M10.854 5.146a.5.5 0 010 .708l-3 3a.5.5 0 01-.708 0l-1.5-1.5a.5.5 0 11.708-.708L7.5 7.793l2.646-2.647a.5.5 0 01.708 0z">
+              </path>
+            </svg> <span class="text-bold" id="stat-total-sessions">0</span> Sesi Selesai</li>
+          <li class="mb-1"><svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path
+                d="M1.5 8a6.5 6.5 0 1 1 13 0 6.5 6.5 0 0 1-13 0ZM8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0Zm-.5 4.75v3.2a.75.75 0 0 0 1.5 0v-2.14l1.22 1.22a.75.75 0 0 0 1.06-1.06l-2.5-2.5a.75.75 0 0 0-1.06 0l-2.5 2.5a.75.75 0 1 0 1.06 1.06l1.22-1.22Z">
+              </path>
+            </svg> <span class="text-bold" id="stat-current-streak">0</span> Hari Streak</li>
+          <li class="mb-1"><svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8z"></path>
+              <path d="M8 4a1 1 0 100-2 1 1 0 000 2zm.75 1.75v5.5a.75.75 0 01-1.5 0v-5.5a.75.75 0 011.5 0z"></path>
+            </svg> <span class="text-bold" id="stat-longest-streak">0</span> Rekor Streak</li>
+        </ul>
+      </div>
+
+      <!-- Mini Calendar -->
+      <div class="border-top color-border-muted pt-3 mt-3">
+        <div class="calendar-header d-flex flex-justify-between flex-items-center mb-2">
+          <h2 class="h5 m-0" id="cal-month-label">Bulan</h2>
+          <div>
+            <button class="btn-octicon" id="cal-prev-month" aria-label="Bulan sebelumnya">
+              <svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path
+                  d="M9.78 12.78a.75.75 0 0 1-1.06 0L4.47 8.53a.75.75 0 0 1 0-1.06l4.25-4.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042L6.06 8l3.72 3.72a.75.75 0 0 1 0 1.06Z" />
+              </svg>
+            </button>
+            <button class="btn-octicon" id="cal-next-month" aria-label="Bulan berikutnya">
+              <svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path
+                  d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="calendar-weekdays">
+          <span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span><span>Min</span>
+        </div>
+        <div class="calendar-grid" id="calendar-grid"></div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="Layout-main">
+      <!-- Underline Nav (Tabs) -->
+      <nav class="UnderlineNav" aria-label="Menu">
+        <ul class="UnderlineNav-body">
+          <li class="d-inline-flex">
+            <button class="UnderlineNav-item nav-btn active" data-view="timer" id="nav-timer">
+              <svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path
+                  d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Zm7.25-4.25v4.25l3.25 3.25a.75.75 0 0 1-1.06 1.06l-3.5-3.5a.75.75 0 0 1-.22-.53V3.75a.75.75 0 0 1 1.5 0Z" />
+              </svg>
+              Timer
+            </button>
+          </li>
+          <li class="d-inline-flex">
+            <button class="UnderlineNav-item nav-btn" data-view="notes" id="nav-notes">
+              <svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path
+                  d="M0 3.75C0 2.784.784 2 1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25Zm1.75-.25a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25ZM3.5 6.25a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5a.75.75 0 0 1-.75-.75Zm.75 2.25h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5Z" />
+              </svg>
+              Catatan
+            </button>
+          </li>
+          <li class="d-inline-flex">
+            <button class="UnderlineNav-item nav-btn" data-view="flashcards" id="nav-flashcards"><svg class="octicon mr-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2.5 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25V2.75a.25.25 0 0 0-.25-.25H2.5ZM.75 2.75C.75 1.784 1.534 1 2.5 1h10.5c.966 0 1.75.784 1.75 1.75v10.5A1.75 1.75 0 0 1 13.0 15H2.5A1.75 1.75 0 0 1 .75 13.25V2.75Z" /></svg>Flashcards</button><button class="UnderlineNav-item nav-btn" data-view="settings" id="nav-settings">
+              <svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path
+                  d="M8 0a8.2 8.2 0 0 1 .701.031C9.444.095 9.99.645 10.16 1.29l.288 1.107c.436.126.853.301 1.238.514l.951-.663c.535-.373 1.218-.328 1.666.166l1.248 1.381c.421.464.444 1.14.072 1.669l-.754 1.077c.143.376.242.775.29 1.189l1.104.286c.652.17 1.205.72 1.267 1.469l.063.766c.036.438.005.885-.094 1.312l-1.121.284a6.792 6.792 0 0 1-.29 1.19l.754 1.076c.371.53.349 1.205-.072 1.67l-1.248 1.38a1.328 1.328 0 0 1-1.666.167l-.951-.664a6.764 6.764 0 0 1-1.238.514l-.288 1.107c-.17.645-.716 1.195-1.46 1.259A8.196 8.196 0 0 1 8 16a8.196 8.196 0 0 1-.701-.031c-.744-.064-1.29-.614-1.46-1.259l-.288-1.107a6.764 6.764 0 0 1-1.238-.514l-.951.664a1.328 1.328 0 0 1-1.666-.167L.448 12.205c-.421-.464-.444-1.14-.072-1.67l.754-1.076a6.792 6.792 0 0 1-.29-1.19L-.265 7.985C-.917 7.815-1.47 7.265-1.532 6.516l-.063-.766c-.036-.438-.005-.885.094-1.312l1.121-.284a6.792 6.792 0 0 1 .29-1.19l-.754-1.076c-.371-.53-.349-1.205.072-1.67l1.248-1.38a1.328 1.328 0 0 1 1.666-.167l.951.664a6.764 6.764 0 0 1 1.238-.514l.288-1.107C4.556.645 5.102.095 5.845.031A8.2 8.2 0 0 1 8 0Zm0 1.5a6.697 6.697 0 0 0-.58.026c-.198.017-.37.152-.416.33L6.726 2.924a.75.75 0 0 1-.681.564 5.253 5.253 0 0 0-1.896.793.75.75 0 0 1-.876-.08L2.09 3.018a.578.578 0 0 0-.742.07l-1.248 1.38a.578.578 0 0 0-.03.744l1.109 1.583a.75.75 0 0 1 .054.88 5.234 5.234 0 0 0-.44 2.046.75.75 0 0 1-.726.71L.12 10.15a.579.579 0 0 0-.455.545l.063.766c.015.178.14.323.324.372l1.963.504a.75.75 0 0 1 .539.697c.05.748.24 1.46.545 2.112a.75.75 0 0 1-.168.868l-1.386 1.053a.578.578 0 0 0-.07.742l1.248 1.38a.578.578 0 0 0 .744.03l1.583-1.109a.75.75 0 0 1 .88-.054c.642.277 1.33.468 2.046.56a.75.75 0 0 1 .71.726l.282 1.947c.023.163.162.29.33.313.385.05.777.05 1.16 0a.333.333 0 0 0 .33-.313l.282-1.947a.75.75 0 0 1 .71-.726 5.247 5.247 0 0 0 2.046-.56.75.75 0 0 1 .88.054l1.583 1.109a.578.578 0 0 0 .744-.03l1.248-1.38a.578.578 0 0 0 .03-.744l-1.109-1.583a.75.75 0 0 1-.054-.88c.306-.653.496-1.365.546-2.113a.75.75 0 0 1 .538-.696l1.964-.504a.578.578 0 0 0 .324-.372l-.063-.766a.579.579 0 0 0-.455-.545l-1.948-.28a.75.75 0 0 1-.726-.71 5.234 5.234 0 0 0-.44-2.046.75.75 0 0 1 .054-.88l1.109-1.583a.578.578 0 0 0-.03-.744l-1.248-1.38a.578.578 0 0 0-.742-.07L11.5 4.202a.75.75 0 0 1-.876.08 5.253 5.253 0 0 0-1.896-.793.75.75 0 0 1-.681-.564L7.768 1.856a.332.332 0 0 0-.416-.33c-.192-.027-.386-.039-.58-.026ZM8 5.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM4 8a4 4 0 1 0 8 0 4 4 0 0 0-8 0Z" />
+              </svg>
+              Pengaturan
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- View: Timer & Contribution -->
+      <section class="view active" id="view-timer">
+
+        <!-- Timer Card -->
+        <div class="Box mb-4 timer-box">
+          <div class="note-cover-area" id="note-cover-area" style="display:none; height: 180px; background-size: cover; background-position: center; position: relative; border-radius: 6px 6px 0 0;"><button class="btn btn-sm" id="btn-change-cover" style="position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.6); color: white; border: none;">Change Cover</button></div><div class="Box-header d-flex flex-justify-between flex-items-center">
+            <h3 class="Box-title">Pomodoro Timer</h3>
+            <div class="session-tabs SegmentedControl">
+              <button class="SegmentedControl-item SegmentedControl-item--selected session-tab" data-type="focus"
+                id="tab-focus" aria-current="true">
+                <span class="SegmentedControl-content">Fokus</span>
+              </button>
+              <button class="SegmentedControl-item session-tab" data-type="short_break" id="tab-short-break">
+                <span class="SegmentedControl-content">Istirahat</span>
+              </button>
+              <button class="SegmentedControl-item session-tab" data-type="long_break" id="tab-long-break">
+                <span class="SegmentedControl-content">Long Break</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="Box-body timer-body text-center p-5">
+            <!-- Circular Timer (Minimalist) -->
+            <div class="timer-circle-wrapper mx-auto mb-4">
+              <svg class="timer-circle" viewBox="0 0 260 260" id="timer-svg">
+                <circle class="timer-bg" cx="130" cy="130" r="115" />
+                <circle class="timer-progress" cx="130" cy="130" r="115" id="timer-progress" stroke-dasharray="722.566"
+                  stroke-dashoffset="0" />
+              </svg>
+              <div class="timer-display">
+                <span class="timer-time" id="timer-time">25:00</span>
+                <span class="timer-label" id="timer-label">FOKUS</span>
+              </div>
+            </div>
+
+            <!-- Timer Controls -->
+            <div class="timer-controls d-flex flex-justify-center flex-items-center gap-3">
+              <button class="btn btn-invisible" id="btn-reset" title="Reset" disabled>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="1 4 1 10 7 10" />
+                  <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                </svg>
+              </button>
+              <button class="btn btn-primary btn-large timer-btn-primary" id="btn-start-pause" title="Mulai">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" id="icon-play">
+                  <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" id="icon-pause"
+                  style="display:none;">
+                  <rect x="6" y="4" width="4" height="16" />
+                  <rect x="14" y="4" width="4" height="16" />
+                </svg>
+              </button>
+              <button class="btn btn-invisible" id="btn-skip" title="Lewati" disabled>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="5 4 15 12 5 20 5 4" />
+                  <line x1="19" y1="5" x2="19" y2="19" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Session Counter -->
+            <div class="session-counter mt-4 mx-auto" id="session-counter">
+              <span class="session-dot filled"></span>
+              <span class="session-dot"></span>
+              <span class="session-dot"></span>
+              <span class="session-dot"></span>
+              <span class="session-counter-text ml-2 text-small color-fg-muted">Sesi 1 / 4</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contribution Graph -->
+        <div>
+          <h2 class="f4 text-normal mb-2">91 contributions in the last year</h2>
+          <div class="border color-border-default rounded-2 p-3 graph-panel">
+            <div class="contribution-graph-wrapper d-flex flex-justify-between">
+              <!-- Grid will be rendered here via JS -->
+              <div class="d-flex flex-column">
+                <div class="contribution-months mb-1" id="contribution-months" style="margin-left: 28px; position: relative; height: 15px; width: 100%;"></div>
+                <div class="d-flex flex-row">
+                  <div class="contribution-days-labels d-flex flex-column text-small color-fg-muted mr-1"
+                    style="height: 105px; justify-content: space-between;">
+                    <span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span><span></span>
+                  </div>
+                  <div class="contribution-graph" id="contribution-graph"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex flex-justify-between flex-items-center mt-2 text-small color-fg-muted">
+              <div>Learn how we count contributions</div>
+              <div class="contribution-legend d-flex flex-items-center gap-1">
+                <span class="mr-1">Less</span>
+                <div class="legend-boxes d-flex gap-1">
+                  <span class="legend-box" style="background: var(--color-calendar-graph-day-bg)"></span>
+                  <span class="legend-box" style="background: var(--color-calendar-graph-day-L1-bg)"></span>
+                  <span class="legend-box" style="background: var(--color-calendar-graph-day-L2-bg)"></span>
+                  <span class="legend-box" style="background: var(--color-calendar-graph-day-L3-bg)"></span>
+                  <span class="legend-box" style="background: var(--color-calendar-graph-day-L4-bg)"></span>
+                </div>
+                <span class="ml-1">More</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- View: Notes -->
+      <section class="view" id="view-notes">
+        <div class="d-flex flex-justify-between flex-items-center mb-3">
+          <div class="d-flex flex-items-center gap-2">
+            <input type="text" class="form-control input-contrast input-sm" placeholder="Find a note..."
+              style="width: 250px;">
+            <div class="notes-filter text-small color-fg-muted" id="notes-filter" style="display:none;">
+              <span id="filter-date-label" class="IssueLabel color-bg-attention-emphasis color-fg-on-emphasis"></span>
+              <button class="btn-link color-fg-muted ml-2" id="filter-clear">
+                <svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                  <path
+                    d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z" />
+                </svg>
+                Clear filter
+              </button>
+            </div>
+          </div>
+          <button class="btn btn-primary" id="btn-add-note">
+            <svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path
+                d="M7.75 2a.75.75 0 0 1 .75.75V7h4.25a.75.75 0 0 1 0 1.5H8.5v4.25a.75.75 0 0 1-1.5 0V8.5H2.75a.75.75 0 0 1 0-1.5H7V2.75A.75.75 0 0 1 7.75 2Z" />
+            </svg>
+            New note
+          </button>
+        </div>
+
+        <div class="Box">
+          <div class="Box-header">
+            <h3 class="Box-title">Semua Catatan</h3>
+          </div>
+          <div class="notes-list" id="notes-list">
+            <div class="blankslate" id="notes-empty">
+              <svg height="24" class="octicon octicon-repo blankslate-icon" viewBox="0 0 16 16" version="1.1" width="24"
+                aria-hidden="true">
+                <path
+                  d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z">
+                </path>
+              </svg>
+              <h3 class="blankslate-heading">Belum ada catatan</h3>
+              <p>Mulai dengan membuat catatan baru untuk sesi fokus Anda.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Note Editor Modal -->
+        <div class="note-editor-overlay" id="note-editor-overlay" style="display:none;">
+          <div class="Box note-editor" id="note-editor">
+            <div class="note-cover-area" id="note-cover-area" style="display:none; height: 180px; background-size: cover; background-position: center; position: relative; border-radius: 6px 6px 0 0;"><button class="btn btn-sm" id="btn-change-cover" style="position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.6); color: white; border: none;">Change Cover</button></div><div class="Box-header d-flex flex-justify-between flex-items-center">
+              <input type="text" class="form-control note-title-input input-contrast" id="note-title-input"
+                placeholder="Title..." />
+              <div>
+                <button class="btn btn-sm btn-primary mr-1" id="note-save-btn">Save</button>
+                <button class="btn btn-sm btn-invisible" id="note-close-btn">
+                  <svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path
+                      d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="p-3 border-bottom color-border-default d-flex flex-items-center flex-wrap gap-2">
+              <div class="note-tags d-flex flex-wrap gap-2" id="note-tags"></div>
+              <input type="text" class="form-control input-sm note-tag-input" id="note-tag-input"
+                placeholder="Add label..." />
+            </div>
+
+            <div class="p-2 border-bottom color-border-default color-bg-subtle note-editor-toolbar d-flex gap-2"><button class="btn btn-sm" data-action="image" title="Add Image/GIF"><svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M1.75 2.5a.25.25 0 0 0-.25.25v10.5c0 .138.112.25.25.25h.79l3.243-3.243a1.45 1.45 0 0 1 2.05 0L12.05 13.5h2.2a.25.25 0 0 0 .25-.25V2.75a.25.25 0 0 0-.25-.25H1.75Zm-.25-1.5h13a1.75 1.75 0 0 1 1.75 1.75v10.5A1.75 1.75 0 0 1 14.5 15H1.75A1.75 1.75 0 0 1 0 13.25V2.75C0 1.784.784 1 1.75 1ZM7.25 6a1.25 1.25 0 1 1-2.5 0 1.25 1.25 0 0 1 2.5 0Z"/></svg></button>
+              <button class="btn btn-sm" data-action="text" title="Text block">
+                <svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                  <path d="M2.5 4v1h11V4h-11Zm0 4v1h11V8h-11Zm0 4v1h7v-1h-7Z" />
+                </svg>
+              </button>
+              <button class="btn btn-sm" data-action="checkbox" title="Checkbox list">
+                <svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                  <path
+                    d="M2 3.5A1.5 1.5 0 0 1 3.5 2h9A1.5 1.5 0 0 1 14 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 12.5v-9Zm1.5-.5a.5.5 0 0 0-.5.5v9c0 .276.224.5.5.5h9a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-9ZM6 8h5a.75.75 0 0 1 0 1.5H6A.75.75 0 0 1 6 8Z" />
+                </svg>
+              </button>
+            </div>
+
+            <div class="p-3 note-editor-content" id="note-editor-content"></div>
+          </div>
+        </div>
+      </section>
+
+      
+      <!-- View: Flashcards -->
+      
+      <!-- View: Flashcards -->
+      
+      <!-- View: Flashcards -->
+      <section class="view" id="view-flashcards">
+        <!-- Default State: List of Decks -->
+        <div id="flashcard-decks-view">
+          <div class="d-flex flex-justify-between flex-items-center mb-4">
+            <div>
+              <h2 style="font-size: 24px; font-weight: 400; margin-bottom: 4px;">Flashcards</h2>
+              <p style="color: var(--color-fg-muted); font-size: 14px; margin: 0;">Organize and memorize with spaced repetition.</p>
+            </div>
+            <div>
+              <button class="btn btn-primary" id="btn-add-deck">Create Folder</button>
+            </div>
+          </div>
+
+          <div class="Box">
+            <div class="Box-header">
+              <h3 class="Box-title" id="decks-count-title">Your Folders (0)</h3>
+            </div>
+            <div class="flashcards-list" id="decks-list">
+              <!-- Decks rendered here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Inside Deck State -->
+        <div id="flashcard-single-deck-view" style="display:none;">
+          <div class="mb-4">
+            <button class="btn btn-sm btn-invisible px-0 mb-2" id="btn-back-to-decks" style="color: var(--color-accent-fg); font-weight: 600;">
+              ← Back to Folders
+            </button>
+            <div class="d-flex flex-justify-between flex-items-center">
+              <div>
+                <h2 style="font-size: 24px; font-weight: 400; margin-bottom: 4px;" id="current-deck-title">Folder Name</h2>
+                <p style="color: var(--color-fg-muted); font-size: 14px; margin: 0;" id="current-deck-count">0 cards</p>
+              </div>
+              <div>
+                <button class="btn btn-primary" id="btn-add-flashcard">Add Card</button>
+                <button class="btn btn-outline color-fg-success" id="btn-study-flashcards">Study Now</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="Box">
+            <div class="flashcards-list" id="flashcards-list">
+              <!-- Cards will be rendered here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Deck Modal -->
+        <div class="note-editor-overlay" id="deck-editor-overlay" style="display:none; align-items:center; justify-content:center;">
+          <div class="Box" style="width: 400px; max-width: 90vw; background: var(--color-canvas-default);">
+            <div class="Box-header"><h3 class="Box-title">Create Folder</h3></div>
+            <div class="Box-body">
+              <div class="form-group mt-0">
+                <div class="form-group-header"><label>Folder Name</label></div>
+                <div class="form-group-body"><input class="form-control" type="text" id="deck-name" style="width:100%;" /></div>
+              </div>
+            </div>
+            <div class="Box-footer" style="display: flex; justify-content: flex-end; gap: 12px; padding: 16px; border-top: 1px solid var(--color-border-default);">
+              <button class="btn" id="btn-close-deck-editor" style="height: 32px; padding: 0 16px; min-width: 80px;">Cancel</button>
+              <button class="btn btn-primary" id="btn-save-deck" style="height: 32px; padding: 0 16px; min-width: 80px;">Save</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Flashcard Modal -->
+        <div class="note-editor-overlay" id="flashcard-editor-overlay" style="display:none; align-items:center; justify-content:center;">
+          <div class="Box" style="width: 500px; max-width: 90vw; background: var(--color-canvas-default);">
+            <div class="Box-header">
+              <h3 class="Box-title">Add Flashcard</h3>
+            </div>
+            <div class="Box-body">
+              <div class="form-group mt-0">
+                <div class="form-group-header"><label>Front (Question)</label></div>
+                <div class="form-group-body">
+                  <textarea class="form-control" id="fc-front" style="width:100%;" rows="3"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="form-group-header"><label>Back (Answer)</label></div>
+                <div class="form-group-body">
+                  <textarea class="form-control" id="fc-back" style="width:100%;" rows="3"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="Box-footer" style="display: flex; justify-content: flex-end; gap: 12px; padding: 16px; border-top: 1px solid var(--color-border-default);">
+              <button class="btn" id="btn-close-fc-editor" style="height: 32px; padding: 0 16px; min-width: 80px; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Cancel</button>
+              <button class="btn btn-primary" id="btn-save-fc" style="height: 32px; padding: 0 16px; min-width: 80px; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;">Save</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Study Mode Modal -->
+        <div class="note-editor-overlay" id="study-mode-overlay" style="display:none; flex-direction:column; align-items:center; justify-content:center; background: var(--color-canvas-default);">
+          <button class="btn btn-invisible position-absolute top-0 right-0 m-3" id="btn-close-study">
+            <svg class="octicon" width="24" height="24" viewBox="0 0 16 16" fill="currentColor"><path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z" /></svg>
+          </button>
+          
+          <h2 class="mb-4" id="study-progress-text">Study Session</h2>
+          
+          <div class="swipe-container" id="swipe-container">
+            <!-- Active cards injected here -->
+          </div>
+          
+          <div class="d-flex justify-content-between mt-4" style="width: 300px; gap: 20px;">
+            <button class="btn btn-danger flex-1" id="btn-swipe-left" style="flex:1;">← Belum Hafal</button>
+            <button class="btn btn-success flex-1" id="btn-swipe-right" style="flex:1;">Sudah Hafal →</button>
+          </div>
+          
+          <div id="study-complete-msg" style="display:none; text-align:center;">
+            <h1 class="color-fg-success mb-2">Hebat! 🎉</h1>
+            <p>Anda sudah menghafal semuanya untuk sesi ini.</p>
+            <button class="btn btn-primary mt-3" id="btn-study-done">Kembali</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- View: Settings -->
+      <section class="view" id="view-settings">
+        <div class="Subhead">
+          <h2 class="Subhead-heading">Settings</h2>
+        </div>
+
+        <div class="Box mb-4">
+          <div class="Box-header">
+            <h3 class="Box-title">Timer Durations</h3>
+          </div>
+          <div class="Box-body">
+            <dl class="form-group">
+              <dt><label for="setting-focus">Focus Session (minutes)</label></dt>
+              <dd><input class="form-control" type="number" id="setting-focus" value="25" min="1" max="120"></dd>
+            </dl>
+            <dl class="form-group">
+              <dt><label for="setting-short-break">Short Break (minutes)</label></dt>
+              <dd><input class="form-control" type="number" id="setting-short-break" value="5" min="1" max="30"></dd>
+            </dl>
+            <dl class="form-group">
+              <dt><label for="setting-long-break">Long Break (minutes)</label></dt>
+              <dd><input class="form-control" type="number" id="setting-long-break" value="15" min="1" max="60"></dd>
+            </dl>
+          </div>
+        </div>
+
+        <div class="Box mb-4">
+          <div class="Box-header">
+            <h3 class="Box-title">Preferences</h3>
+          </div>
+          <div class="Box-body">
+            <div class="form-checkbox">
+              <label>
+                <input type="checkbox" id="setting-notifications" checked>
+                Desktop notifications
+              </label>
+              <p class="note">Show notifications when a session completes.</p>
+            </div>
+            <div class="form-checkbox">
+              <label>
+                <input type="checkbox" id="setting-sound" checked>
+                Sound effects
+              </label>
+              <p class="note">Play a sound when a session completes.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="Box border-danger mb-4">
+          <div class="Box-header border-bottom-0 pb-0">
+            <h3 class="Box-title color-fg-danger">Danger Zone</h3>
+          </div>
+          <div class="Box-body">
+            <div class="d-flex flex-justify-between flex-items-center pb-3 border-bottom color-border-default mb-3">
+              <div>
+                <strong>Export data</strong>
+                <p class="text-small color-fg-muted m-0">Download all your sessions and notes as JSON.</p>
+              </div>
+              <button class="btn" id="btn-export-data">Export</button>
+            </div>
+            <div class="d-flex flex-justify-between flex-items-center">
+              <div>
+                <strong>Delete all data</strong>
+                <p class="text-small color-fg-muted m-0">This will permanently delete all your sessions, notes, and
+                  profile settings.</p>
+              </div>
+              <button class="btn btn-danger" id="btn-clear-data">Delete data</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- File Inputs -->
+  <input type="file" id="note-cover-input" accept="image/*" style="display:none;" />
+  <input type="file" id="note-image-input" accept="image/*" style="display:none;" />
+
+  <!-- Toast Notification -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script type="module" src="/main.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
