@@ -8,7 +8,8 @@ const DEFAULT_SETTINGS = {
   shortBreakDuration: 5,
   longBreakDuration: 15,
   notifications: true,
-  sound: true
+  sound: true,
+  autoStart: false
 };
 
 const DEFAULT_DATA = {
@@ -106,6 +107,7 @@ const DOM = {
   settingLong: document.getElementById('setting-long-break'),
   settingNotif: document.getElementById('setting-notifications'),
   settingSound: document.getElementById('setting-sound'),
+  settingAutoStart: document.getElementById('setting-auto-start'),
   btnExport: document.getElementById('btn-export-data'),
   btnClear: document.getElementById('btn-clear-data'),
   
@@ -721,6 +723,10 @@ function completeTimer(skipped = false) {
   DOM.btnReset.disabled = true;
   DOM.btnSkip.disabled = true;
   document.title = `SUE — Show Up Everyday`;
+  
+  if (appData.settings.autoStart && !skipped) {
+    setTimeout(() => startTimer(), 1500); // Auto start after 1.5 seconds
+  }
 }
 
 function updateSessionDots() {
@@ -1178,6 +1184,7 @@ function updateSettingsUI() {
   DOM.settingLong.value = appData.settings.longBreakDuration;
   DOM.settingNotif.checked = appData.settings.notifications;
   DOM.settingSound.checked = appData.settings.sound;
+  DOM.settingAutoStart.checked = !!appData.settings.autoStart;
 }
 
 function saveSettings() {
@@ -1186,7 +1193,8 @@ function saveSettings() {
     shortBreakDuration: parseInt(DOM.settingShort.value) || 5,
     longBreakDuration: parseInt(DOM.settingLong.value) || 15,
     notifications: DOM.settingNotif.checked,
-    sound: DOM.settingSound.checked
+    sound: DOM.settingSound.checked,
+    autoStart: DOM.settingAutoStart.checked
   };
   saveData();
   if (timerState.status === 'idle') setTimerType(timerState.type);
@@ -1332,6 +1340,7 @@ function setupEventListeners() {
   DOM.settingLong.addEventListener('change', saveSettings);
   DOM.settingNotif.addEventListener('change', saveSettings);
   DOM.settingSound.addEventListener('change', saveSettings);
+  DOM.settingAutoStart.addEventListener('change', saveSettings);
   DOM.btnExport.addEventListener('click', exportData);
   DOM.btnClear.addEventListener('click', clearData);
   
