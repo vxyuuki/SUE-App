@@ -741,30 +741,32 @@ function updateSessionDots() {
 
 async function changeQuote() {
   try {
-    // ZenQuotes API via allorigins CORS proxy
-    const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://zenquotes.io/api/random');
-    const response = await fetch(proxyUrl);
-    
-    if (!response.ok) throw new Error('API request failed');
-    
-    const data = await response.json();
-    const parsed = JSON.parse(data.contents);
-    
-    if (parsed && parsed.length > 0 && parsed[0].q) {
-      DOM.quoteText.style.opacity = '0';
-      DOM.quoteAuthor.style.opacity = '0';
-      
-      setTimeout(() => {
-        DOM.quoteText.textContent = `"${parsed[0].q}"`;
-        DOM.quoteAuthor.textContent = `— ${parsed[0].a}`;
-        DOM.quoteText.style.opacity = '1';
-        DOM.quoteAuthor.style.opacity = '1';
-      }, 300);
-      return;
+    if (!window.loadedQuotes) {
+      const response = await fetch('./quotes.json');
+      if (response.ok) {
+        window.loadedQuotes = await response.json();
+      }
     }
-    throw new Error('Invalid API response');
+    
+    let q;
+    if (window.loadedQuotes && window.loadedQuotes.length > 0) {
+      q = window.loadedQuotes[Math.floor(Math.random() * window.loadedQuotes.length)];
+    } else {
+      throw new Error('No quotes loaded');
+    }
+
+    DOM.quoteText.style.opacity = '0';
+    DOM.quoteAuthor.style.opacity = '0';
+    
+    setTimeout(() => {
+      DOM.quoteText.textContent = `"${q.text}"`;
+      DOM.quoteAuthor.textContent = `— ${q.author || 'Unknown'}`;
+      DOM.quoteText.style.opacity = '1';
+      DOM.quoteAuthor.style.opacity = '1';
+    }, 300);
+    
   } catch (e) {
-    // Fallback ke kutipan lokal jika API gagal
+    // Fallback ke kutipan lokal jika fetch gagal
     const q = MOTIVATIONAL_QUOTES[Math.floor(Math.random() * MOTIVATIONAL_QUOTES.length)];
     DOM.quoteText.style.opacity = '0';
     DOM.quoteAuthor.style.opacity = '0';
