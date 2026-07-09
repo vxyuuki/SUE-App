@@ -9,7 +9,8 @@ const DEFAULT_SETTINGS = {
   longBreakDuration: 15,
   notifications: true,
   sound: true,
-  autoStart: false
+  autoStart: false,
+  theme: 'dark'
 };
 
 const DEFAULT_DATA = {
@@ -108,6 +109,7 @@ const DOM = {
   settingNotif: document.getElementById('setting-notifications'),
   settingSound: document.getElementById('setting-sound'),
   settingAutoStart: document.getElementById('setting-auto-start'),
+  settingTheme: document.getElementById('setting-theme'),
   btnExport: document.getElementById('btn-export-data'),
   btnClear: document.getElementById('btn-clear-data'),
   
@@ -1185,6 +1187,8 @@ function updateSettingsUI() {
   DOM.settingNotif.checked = appData.settings.notifications;
   DOM.settingSound.checked = appData.settings.sound;
   DOM.settingAutoStart.checked = !!appData.settings.autoStart;
+  DOM.settingTheme.value = appData.settings.theme || 'dark';
+  document.documentElement.setAttribute('data-theme', appData.settings.theme || 'dark');
 }
 
 function saveSettings() {
@@ -1194,8 +1198,10 @@ function saveSettings() {
     longBreakDuration: parseInt(DOM.settingLong.value) || 15,
     notifications: DOM.settingNotif.checked,
     sound: DOM.settingSound.checked,
-    autoStart: DOM.settingAutoStart.checked
+    autoStart: DOM.settingAutoStart.checked,
+    theme: DOM.settingTheme.value
   };
+  document.documentElement.setAttribute('data-theme', appData.settings.theme);
   saveData();
   if (timerState.status === 'idle') setTimerType(timerState.type);
   showToast('Settings saved.');
@@ -1341,6 +1347,7 @@ function setupEventListeners() {
   DOM.settingNotif.addEventListener('change', saveSettings);
   DOM.settingSound.addEventListener('change', saveSettings);
   DOM.settingAutoStart.addEventListener('change', saveSettings);
+  DOM.settingTheme.addEventListener('change', saveSettings);
   DOM.btnExport.addEventListener('click', exportData);
   DOM.btnClear.addEventListener('click', clearData);
   

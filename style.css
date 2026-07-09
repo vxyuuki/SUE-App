@@ -24,6 +24,30 @@
   --color-calendar-graph-day-L4-bg: #39d353;
 }
 
+[data-theme="light"] {
+  --color-canvas-default: #ffffff;
+  --color-canvas-subtle: #f6f8fa;
+  --color-canvas-overlay: #ffffff;
+  --color-border-default: #d0d7de;
+  --color-border-muted: #d0d7de;
+  --color-fg-default: #24292f;
+  --color-fg-muted: #57606a;
+  --color-fg-on-emphasis: #ffffff;
+  --color-accent-fg: #0969da;
+  --color-accent-emphasis: #0969da;
+  --color-accent-muted: rgba(9, 105, 218, 0.4);
+  --color-danger-fg: #cf222e;
+  --color-danger-emphasis: #cf222e;
+  --color-success-fg: #1a7f37;
+  
+  --color-calendar-graph-day-bg: #ebedf0;
+  --color-calendar-graph-day-border: rgba(27,31,35,0.06);
+  --color-calendar-graph-day-L1-bg: #9be9a8;
+  --color-calendar-graph-day-L2-bg: #40c463;
+  --color-calendar-graph-day-L3-bg: #30a14e;
+  --color-calendar-graph-day-L4-bg: #216e39;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
