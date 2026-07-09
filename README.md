@@ -24,6 +24,7 @@ All data is stored **100% locally** on your machine. No internet connection requ
 
 - ⏱️ **Focus Timer (Pomodoro)**
   - Customizable focus sessions.
+  - Auto-start timer mode for seamless flow between Focus and Break sessions.
   - Interactive "GitHub Contribution" style heatmap to track your daily focus streaks.
 - 📝 **Notion-Style Notes Editor**
   - Block-based text editing (text, checkboxes, image embeds).
@@ -31,8 +32,9 @@ All data is stored **100% locally** on your machine. No internet connection requ
 - 🗂️ **Spaced Repetition Flashcards**
   - Organize your learning materials into custom Folders (Decks).
   - Tinder-like swipe mechanics (Left for "Forgot", Right for "Remembered") for studying.
-- 🌙 **Aesthetics**
-  - Beautiful GitHub-inspired dark theme using Primer CSS.
+- 🎨 **Aesthetics & Motivation**
+  - GitHub-inspired UI with toggleable Dark and Light mode themes.
+  - Built-in library of 2000+ local offline motivational quotes.
 
 ## 🛠️ Installation & Setup
 
