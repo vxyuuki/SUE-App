@@ -159,7 +159,7 @@ a:hover { text-decoration: underline; }
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--color-fg-on-emphasis);
+  color: var(--color-fg-default);
   flex-shrink: 0;
 }
 .AppHeader-title {
@@ -220,7 +220,7 @@ a:hover { text-decoration: underline; }
   transition: background-color 0.15s ease;
 }
 .AppHeader-nav-link:hover {
-  background-color: rgba(255,255,255,0.1);
+  background-color: rgba(128, 128, 128, 0.2);
   text-decoration: none;
 }
 .AppHeader-nav-link .octicon {
