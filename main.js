@@ -87,6 +87,7 @@ const DOM = {
   btnStartPause: document.getElementById('btn-start-pause'),
   btnReset: document.getElementById('btn-reset'),
   btnSkip: document.getElementById('btn-skip'),
+  btnMiniMode: document.getElementById('btn-mini-mode'),
   iconPlay: document.getElementById('icon-play'),
   iconPause: document.getElementById('icon-pause'),
   sessionDots: document.querySelectorAll('.session-dot'),
@@ -592,6 +593,18 @@ function getDuration(type) {
     case 'short_break': return appData.settings.shortBreakDuration * 60;
     case 'long_break': return appData.settings.longBreakDuration * 60;
     default: return 25 * 60;
+  }
+}
+
+function toggleMiniMode() {
+  isMiniMode = !isMiniMode;
+  if (isMiniMode) {
+    document.body.classList.add('mini-mode');
+  } else {
+    document.body.classList.remove('mini-mode');
+  }
+  if (window.electronAPI && window.electronAPI.setMiniMode) {
+    window.electronAPI.setMiniMode(isMiniMode);
   }
 }
 
@@ -1231,6 +1244,7 @@ function setupEventListeners() {
   DOM.btnStartPause.addEventListener('click', toggleTimer);
   DOM.btnReset.addEventListener('click', resetTimer);
   DOM.btnSkip.addEventListener('click', () => completeTimer(true));
+  DOM.btnMiniMode.addEventListener('click', toggleMiniMode);
   
   DOM.tabs.forEach(tab => {
     tab.addEventListener('click', () => {
