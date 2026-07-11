@@ -600,6 +600,9 @@ let isMiniMode = false;
 function toggleMiniMode() {
   isMiniMode = !isMiniMode;
   if (isMiniMode) {
+    // Force switch to timer view before entering mini mode
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.getElementById('view-timer').classList.add('active');
     document.body.classList.add('mini-mode');
   } else {
     document.body.classList.remove('mini-mode');

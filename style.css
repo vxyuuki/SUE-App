@@ -807,23 +807,49 @@ body.mini-mode .timer-box {
 }
 
 body.mini-mode .timer-body {
-  padding: 10px !important;
+  padding: 8px 10px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
 }
 
 body.mini-mode .timer-circle-wrapper {
+  width: 100px !important;
+  height: 100px !important;
   margin-bottom: 0 !important;
 }
 
-body.mini-mode .timer-circle {
-  width: 110px !important;
-  height: 110px !important;
+body.mini-mode .timer-time {
+  font-size: 26px !important;
 }
 
-body.mini-mode .timer-time {
-  font-size: 32px !important;
+body.mini-mode .timer-label {
+  font-size: 9px !important;
+  letter-spacing: 1.5px !important;
 }
 
 body.mini-mode .timer-controls {
-  margin-top: -10px !important;
+  margin-top: 0 !important;
+  max-width: 200px !important;
+  gap: 4px !important;
+}
+
+body.mini-mode .timer-controls .btn-large,
+body.mini-mode .timer-controls .timer-btn-primary {
+  width: 36px !important;
+  height: 36px !important;
+  padding: 0 !important;
+}
+
+body.mini-mode .timer-controls .timer-btn-primary svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+body.mini-mode .timer-controls .btn-invisible svg {
+  width: 14px !important;
+  height: 14px !important;
 }
 
