@@ -1023,6 +1023,7 @@ function renderAnalytics() {
         pointRadius: 0,
         pointHitRadius: 15,
         pointHoverRadius: 6,
+        clip: false,
         fill: true,
         tension: 0.3 // Smooth curves
       }]
