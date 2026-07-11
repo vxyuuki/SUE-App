@@ -44,6 +44,7 @@ All data is stored **100% locally** on your machine. No internet connection requ
   - Tinder-like swipe mechanics (Left for "Forgot", Right for "Remembered") for studying.
 - 🎨 **Aesthetics & Motivation**
   - GitHub-inspired UI with toggleable Dark and Light mode themes.
+  - 🌐 **Bilingual Support (ID/EN)**: Seamlessly switch between Bahasa Indonesia and English interfaces.
   - **IndexedDB-powered profiles** supporting high-quality animated GIFs (up to 25MB).
   - Built-in library of 2000+ local offline motivational quotes.
 

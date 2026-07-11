@@ -74,6 +74,9 @@
           <span class="status-text" id="header-status-text">Idle</span>
         </div>
 
+        <!-- Language Toggle -->
+        <button class="AppHeader-icon-btn" id="header-lang-btn" title="Ganti Bahasa" style="font-weight:bold;font-size:14px;padding:0 10px;"><span id="header-lang-text">ID</span></button>
+
         <!-- Notification Bell -->
         <button class="AppHeader-icon-btn" id="header-notif-btn" title="Notifications">
           <svg class="octicon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -330,7 +333,7 @@
             <div class="d-flex flex-justify-between flex-items-center mt-2 text-small color-fg-muted">
               <div>Learn how we count contributions</div>
               <div class="contribution-legend d-flex flex-items-center gap-1">
-                <span class="mr-1">Less</span>
+                <span class="mr-1" data-i18n="graph_less">Less</span>
                 <div class="legend-boxes d-flex gap-1">
                   <span class="legend-box" style="background: var(--color-calendar-graph-day-bg)"></span>
                   <span class="legend-box" style="background: var(--color-calendar-graph-day-L1-bg)"></span>
@@ -338,7 +341,7 @@
                   <span class="legend-box" style="background: var(--color-calendar-graph-day-L3-bg)"></span>
                   <span class="legend-box" style="background: var(--color-calendar-graph-day-L4-bg)"></span>
                 </div>
-                <span class="ml-1">More</span>
+                <span class="ml-1" data-i18n="graph_more">More</span>
               </div>
             </div>
           </div>
@@ -346,7 +349,7 @@
 
         <!-- Analytics & Habit Tracker -->
         <div class="mb-4">
-          <h2 class="f4 text-normal mb-2">Analytics & Habit Tracker</h2>
+          <h2 class="f4 text-normal mb-2" data-i18n="analytics_title">Analytics & Habit Tracker</h2>
           <div class="border color-border-default rounded-2 p-3 analytics-panel">
             <div class="d-flex flex-column flex-md-row gap-3">
               <!-- Left Column: Weekly Bar Chart -->
@@ -594,24 +597,24 @@
       <!-- View: Settings -->
       <section class="view" id="view-settings">
         <div class="Subhead">
-          <h2 class="Subhead-heading">Settings</h2>
+          <h2 class="Subhead-heading" data-i18n="settings_title">Settings</h2>
         </div>
 
         <div class="Box mb-4">
           <div class="Box-header">
-            <h3 class="Box-title">Timer Durations</h3>
+            <h3 class="Box-title" data-i18n="settings_durations">Timer Durations</h3>
           </div>
           <div class="Box-body">
             <dl class="form-group">
-              <dt><label for="setting-focus">Focus Session (minutes)</label></dt>
+              <dt><label for="setting-focus" data-i18n="settings_focus">Focus Session (minutes)</label></dt>
               <dd><input class="form-control" type="number" id="setting-focus" value="25" min="1" max="120"></dd>
             </dl>
             <dl class="form-group">
-              <dt><label for="setting-short-break">Short Break (minutes)</label></dt>
+              <dt><label for="setting-short-break" data-i18n="settings_short">Short Break (minutes)</label></dt>
               <dd><input class="form-control" type="number" id="setting-short-break" value="5" min="1" max="30"></dd>
             </dl>
             <dl class="form-group">
-              <dt><label for="setting-long-break">Long Break (minutes)</label></dt>
+              <dt><label for="setting-long-break" data-i18n="settings_long">Long Break (minutes)</label></dt>
               <dd><input class="form-control" type="number" id="setting-long-break" value="15" min="1" max="60"></dd>
             </dl>
           </div>
@@ -619,11 +622,20 @@
 
         <div class="Box mb-4">
           <div class="Box-header">
-            <h3 class="Box-title">Preferences</h3>
+            <h3 class="Box-title" data-i18n="settings_pref">Preferences</h3>
           </div>
           <div class="Box-body">
             <dl class="form-group mt-0">
-              <dt><label for="setting-theme">Theme</label></dt>
+              <dt><label for="setting-language" data-i18n="settings_lang">Bahasa</label></dt>
+              <dd>
+                <select class="form-select" id="setting-language">
+                  <option value="id">Bahasa Indonesia</option>
+                  <option value="en">English</option>
+                </select>
+              </dd>
+            </dl>
+            <dl class="form-group">
+              <dt><label for="setting-theme" data-i18n="settings_theme">Theme</label></dt>
               <dd>
                 <select class="form-select" id="setting-theme">
                   <option value="dark">Dark (Default)</option>

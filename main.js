@@ -1,6 +1,12 @@
 // SUE - Show Up Everyday | Main Logic (GitHub Theme)
 
 // --- Constants & Data ---
+function generateId() {
+  try {
+    if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+  } catch(e) {}
+  return Date.now().toString(36) + Math.random().toString(36).substring(2);
+}
 const STORAGE_KEY = 'sue_data_v1';
 
 const DEFAULT_SETTINGS = {
@@ -10,7 +16,8 @@ const DEFAULT_SETTINGS = {
   notifications: true,
   sound: true,
   autoStart: false,
-  theme: 'dark'
+  theme: 'dark',
+  language: 'id'
 };
 
 const DEFAULT_DATA = {
@@ -154,6 +161,7 @@ const DOM = {
   settingSound: document.getElementById('setting-sound'),
   settingAutoStart: document.getElementById('setting-auto-start'),
   settingTheme: document.getElementById('setting-theme'),
+  settingLanguage: document.getElementById('setting-language'),
   btnExport: document.getElementById('btn-export-data'),
   btnClear: document.getElementById('btn-clear-data'),
   
@@ -174,6 +182,80 @@ const DOM = {
   filterLabel: document.getElementById('filter-date-label')
 };
 
+
+// --- i18n Localization ---
+const translations = {
+  en: {
+    nav_timer:'Timer',nav_notes:'Notes',nav_flashcards:'Flashcards',nav_settings:'Settings',
+    search_placeholder:'Type / to search',header_timer_status:'Idle',stat_title:'Productivity Stats',
+    stat_focus:'Focus Time',stat_sessions:'Sessions Completed',stat_streak:'Day Streak',stat_best:'Best Streak',
+    timer_focus:'Focus',timer_short:'Short Break',timer_long:'Long Break',analytics_title:'Analytics & Habit Tracker',
+    analytics_7days:'Study Time (Last 7 Days)',analytics_total:'Total Study (This Week)',analytics_avg:'Daily Average',
+    analytics_ratio:'Focus & Break Ratio',settings_title:'Settings',settings_durations:'Timer Durations',
+    settings_focus:'Focus Session (minutes)',settings_short:'Short Break (minutes)',settings_long:'Long Break (minutes)',
+    settings_pref:'Preferences',settings_lang:'Language',settings_theme:'Theme',settings_notif:'Desktop notifications',
+    settings_notif_desc:'Show notifications when a session completes.',settings_sound:'Sound effects',
+    settings_sound_desc:'Play a sound when a session completes.',settings_auto:'Auto-start timer',
+    settings_auto_desc:'Automatically start the next session when the current one ends.',
+    graph_hours:'hours of focus in the last year',graph_learn:'Learn how we count contributions',
+    graph_less:'Less',graph_more:'More',
+    note_find_placeholder:'Find a note...',note_new:'New note',note_all_title:'All Notes',
+    note_empty_title:'No notes yet',note_save:'Save',note_change_cover:'Change Cover',
+    flashcards_title:'Flashcards',flashcards_create:'Create Folder',flashcards_folders:'Your Folders',
+    flashcards_add:'Add Card',flashcards_study_now:'Study Now',flashcards_folder_name:'Folder Name',
+    flashcards_cancel:'Cancel',flashcards_save:'Save',flashcards_front:'Front (Question)',flashcards_back_label:'Back (Answer)',
+    toast_settings_saved:'Settings saved.',toast_avatar_updated:'Avatar updated',toast_max_file:'Max file size is 25MB',
+    toast_notif_enabled:'Notifications enabled!',toast_notif_blocked:'Notifications blocked.'
+  },
+  id: {
+    nav_timer:'Timer',nav_notes:'Catatan',nav_flashcards:'Flashcards',nav_settings:'Pengaturan',
+    search_placeholder:'Ketik / untuk mencari',header_timer_status:'Diam',stat_title:'Statistik Produktivitas',
+    stat_focus:'Waktu Fokus',stat_sessions:'Sesi Selesai',stat_streak:'Hari Streak',stat_best:'Rekor Streak',
+    timer_focus:'Fokus',timer_short:'Istirahat',timer_long:'Long Break',analytics_title:'Analitik & Pelacak Kebiasaan',
+    analytics_7days:'Waktu Belajar (7 Hari Terakhir)',analytics_total:'Total Belajar (Minggu Ini)',analytics_avg:'Rata-rata Harian',
+    analytics_ratio:'Rasio Fokus & Istirahat',settings_title:'Pengaturan',settings_durations:'Durasi Timer',
+    settings_focus:'Sesi Fokus (menit)',settings_short:'Istirahat Pendek (menit)',settings_long:'Istirahat Panjang (menit)',
+    settings_pref:'Preferensi',settings_lang:'Bahasa',settings_theme:'Tema',settings_notif:'Notifikasi desktop',
+    settings_notif_desc:'Tampilkan notifikasi saat sesi selesai.',settings_sound:'Efek Suara',
+    settings_sound_desc:'Putar suara saat sesi selesai.',settings_auto:'Mulai otomatis',
+    settings_auto_desc:'Mulai sesi berikutnya secara otomatis saat ini berakhir.',
+    graph_hours:'jam waktu fokus dalam setahun terakhir',graph_learn:'Pelajari cara kami menghitung kontribusi',
+    graph_less:'Sedikit',graph_more:'Banyak',
+    note_find_placeholder:'Cari catatan...',note_new:'Catatan baru',note_all_title:'Semua Catatan',
+    note_empty_title:'Belum ada catatan',note_save:'Simpan',note_change_cover:'Ubah Sampul',
+    flashcards_title:'Flashcards',flashcards_create:'Buat Folder',flashcards_folders:'Folder Anda',
+    flashcards_add:'Tambah Kartu',flashcards_study_now:'Belajar Sekarang',flashcards_folder_name:'Nama Folder',
+    flashcards_cancel:'Batal',flashcards_save:'Simpan',flashcards_front:'Depan (Pertanyaan)',flashcards_back_label:'Belakang (Jawaban)',
+    toast_settings_saved:'Pengaturan disimpan.',toast_avatar_updated:'Avatar diperbarui',toast_max_file:'Ukuran file maks 25MB',
+    toast_notif_enabled:'Notifikasi diaktifkan!',toast_notif_blocked:'Notifikasi diblokir.'
+  }
+};
+
+window.applyLanguage = function() {
+  const lang = appData && appData.settings ? appData.settings.language || 'id' : 'id';
+  const dict = translations[lang] || translations['id'];
+  document.querySelectorAll("[data-i18n]").forEach(function(el) {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key]) {
+      let hasText = false;
+      el.childNodes.forEach(function(node) {
+        if (node.nodeType === 3 && node.nodeValue.trim().length > 0) { node.nodeValue = dict[key]; hasText = true; }
+      });
+      if (!hasText && el.childNodes.length === 0) el.textContent = dict[key];
+    }
+  });
+  const ft = document.querySelector(".graph-panel") ? document.querySelector(".graph-panel").previousElementSibling : null;
+  if (ft) ft.textContent = Math.floor((window._totalMinsYear || 0) / 60) + " " + dict.graph_hours;
+  document.documentElement.lang = lang;
+  const hlt = document.getElementById('header-lang-text');
+  if (hlt) hlt.textContent = lang === 'en' ? 'EN' : 'ID';
+};
+
+window.t = function(key) {
+  const lang = appData && appData.settings ? appData.settings.language || 'id' : 'id';
+  const dict = translations[lang] || translations['id'];
+  return dict[key] || key;
+};
 // --- Initialization ---
 
 
@@ -190,7 +272,7 @@ const DOM = {
     if (appData.flashcards && appData.flashcards.length > 0) {
       if (!appData.decks) appData.decks = [];
       appData.decks.push({
-        id: crypto.randomUUID(),
+        id: generateId(),
         name: 'General',
         cards: [...appData.flashcards]
       });
@@ -442,7 +524,7 @@ const DOM = {
       const name = document.getElementById('deck-name').value.trim();
       if(name) {
         if(!appData.decks) appData.decks = [];
-        appData.decks.push({ id: crypto.randomUUID(), name, cards: [] });
+        appData.decks.push({ id: generateId(), name, cards: [] });
         saveData();
         renderDecksList();
         document.getElementById('deck-editor-overlay').style.display = 'none';
@@ -475,7 +557,7 @@ const DOM = {
         const deck = appData.decks.find(d => d.id === currentDeckId);
         if (deck) {
           if (!deck.cards) deck.cards = [];
-          deck.cards.push({ id: crypto.randomUUID(), front, back });
+          deck.cards.push({ id: generateId(), front, back });
           saveData();
           renderFlashcardsList();
           document.getElementById('flashcard-editor-overlay').style.display = 'none';
@@ -507,7 +589,8 @@ async function init() {
   renderNotes();
   setTimerType('focus');
   changeQuote();
-  setInterval(changeQuote, 15000); // Ganti kata motivasi setiap 15 detik (via API)
+  setInterval(changeQuote, 15000);
+  if (window.applyLanguage) window.applyLanguage(); // Ganti kata motivasi setiap 15 detik (via API)
   
   if (appData.settings.notifications && 'Notification' in window) {
     if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
@@ -761,7 +844,7 @@ function completeTimer(skipped = false) {
   if (durationCompleted > 0) {
     const today = new Date().toISOString().split('T')[0];
     appData.sessions.push({
-      id: crypto.randomUUID(),
+      id: generateId(),
       type: timerState.type,
       date: today,
       duration: durationCompleted,
@@ -923,7 +1006,7 @@ function renderGraph() {
   let currentMonth = -1;
   let monthSpans = [];
   
-  let totalMinsYear = 0;
+  window._totalMinsYear = 0;
   
   for (let week = 0; week < 53; week++) {
     const col = document.createElement('div');
@@ -943,7 +1026,7 @@ function renderGraph() {
       
       const dateStr = cellDate.toISOString().split('T')[0];
       const mins = stats[dateStr] || 0;
-      totalMinsYear += mins;
+      window._totalMinsYear += mins;
       
       const cell = document.createElement('div');
       cell.className = 'graph-day';
@@ -996,7 +1079,7 @@ function renderGraph() {
   });
   
   const h2 = document.querySelector('.graph-panel').previousElementSibling;
-  h2.textContent = `${Math.floor(totalMinsYear/60)} hours of focus in the last year`;
+  h2.textContent = `${Math.floor(window._totalMinsYear / 60)} hours of focus in the last year`;
   
   const wrapper = document.querySelector('.contribution-graph-wrapper');
   if (wrapper) wrapper.scrollLeft = wrapper.scrollWidth;
@@ -1393,7 +1476,7 @@ function saveNote() {
       }
     } else {
       appData.notes.push({
-        id: crypto.randomUUID(),
+        id: generateId(),
         title,
         blocks,
         tags,
@@ -1426,6 +1509,7 @@ function updateSettingsUI() {
   DOM.settingSound.checked = appData.settings.sound;
   DOM.settingAutoStart.checked = !!appData.settings.autoStart;
   DOM.settingTheme.value = appData.settings.theme || 'dark';
+  if (DOM.settingLanguage) DOM.settingLanguage.value = appData.settings.language || 'id';
   document.documentElement.setAttribute('data-theme', appData.settings.theme || 'dark');
 }
 
@@ -1437,9 +1521,11 @@ function saveSettings() {
     notifications: DOM.settingNotif.checked,
     sound: DOM.settingSound.checked,
     autoStart: DOM.settingAutoStart.checked,
-    theme: DOM.settingTheme.value
+    theme: DOM.settingTheme.value,
+    language: DOM.settingLanguage ? DOM.settingLanguage.value : (appData.settings.language || 'id')
   };
   document.documentElement.setAttribute('data-theme', appData.settings.theme);
+  if (window.applyLanguage) window.applyLanguage();
   saveData();
   if (timerState.status === 'idle') setTimerType(timerState.type);
   showToast('Settings saved.');
@@ -1590,6 +1676,7 @@ function setupEventListeners() {
   DOM.settingSound.addEventListener('change', saveSettings);
   DOM.settingAutoStart.addEventListener('change', saveSettings);
   DOM.settingTheme.addEventListener('change', saveSettings);
+  if (DOM.settingLanguage) DOM.settingLanguage.addEventListener('change', saveSettings);
   DOM.btnExport.addEventListener('click', exportData);
   DOM.btnClear.addEventListener('click', clearData);
   
