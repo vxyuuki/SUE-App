@@ -755,65 +755,75 @@ a:hover { text-decoration: underline; }
   color: var(--color-fg-muted);
 }
 
+
+
 /* Mini Mode */
 body.mini-mode .AppHeader,
 body.mini-mode .Layout-sidebar,
-body.mini-mode .Layout-main > div:not(.timer-view),
-body.mini-mode .Heatmap-container,
-body.mini-mode .timer-sessions {
+body.mini-mode .UnderlineNav,
+body.mini-mode #view-timer > div:not(.timer-box),
+body.mini-mode .timer-box .Box-header,
+body.mini-mode .timer-box .session-counter,
+body.mini-mode .timer-box .note-cover-area,
+body.mini-mode .view:not(#view-timer) {
   display: none !important;
 }
 
 body.mini-mode {
-  overflow: hidden;
+  overflow: hidden !important;
+  background: var(--color-canvas-default) !important;
 }
 
 body.mini-mode .Layout {
-  display: flex;
+  display: flex !important;
+  height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
   align-items: center;
   justify-content: center;
-  height: 100vh;
 }
 
 body.mini-mode .Layout-main {
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
-body.mini-mode .timer-view {
-  display: flex;
+body.mini-mode #view-timer {
+  display: flex !important;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0;
-  padding: 0;
-  width: 100%;
+  padding: 0 !important;
+  height: 100vh;
+}
+
+body.mini-mode .timer-box {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body.mini-mode .timer-body {
+  padding: 10px !important;
+}
+
+body.mini-mode .timer-circle-wrapper {
+  margin-bottom: 0 !important;
 }
 
 body.mini-mode .timer-circle {
-  width: 100px;
-  height: 100px;
+  width: 110px !important;
+  height: 110px !important;
 }
 
 body.mini-mode .timer-time {
-  font-size: 28px;
-}
-
-body.mini-mode .timer-label {
-  font-size: 10px;
+  font-size: 32px !important;
 }
 
 body.mini-mode .timer-controls {
-  margin-top: 10px;
+  margin-top: -10px !important;
 }
 
-body.mini-mode .timer-controls .btn-large {
-  padding: 4px 12px;
-}
-
-body.mini-mode .timer-controls svg {
-  width: 16px;
-  height: 16px;
-}
