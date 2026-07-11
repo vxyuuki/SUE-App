@@ -227,7 +227,7 @@
           <div class="Box-header d-flex flex-justify-between flex-items-center">
             <div class="d-flex flex-items-center gap-2">
               <h3 class="Box-title">Pomodoro Timer</h3>
-              <button class="btn btn-invisible p-1" id="btn-mini-mode" title="Mini Player" style="color: var(--color-fg-muted); display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; width: 28px; height: 28px;">
+              <button class="btn-octicon" id="btn-mini-mode" title="Mini Player" style="color: var(--color-fg-muted); display: inline-flex; align-items: center; justify-content: center;">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
                   <line x1="8" y1="21" x2="16" y2="21"/>
@@ -264,7 +264,7 @@
             </div>
 
             <!-- Timer Controls -->
-            <div class="timer-controls d-flex flex-justify-between flex-items-center width-full" style="max-width: 320px; margin: 0 auto;">
+            <div class="timer-controls d-flex flex-justify-center flex-items-center gap-3 width-full" style="max-width: 320px; margin: 0 auto;">
               <!-- Mini Mode Restore Button (Only visible in mini mode) -->
               <button class="btn btn-invisible" id="btn-mini-mode-restore" title="Restore Player">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -274,31 +274,28 @@
                 </svg>
               </button>
               
-              <div class="d-flex flex-justify-center flex-items-center gap-3">
-                <button class="btn btn-invisible" id="btn-reset" title="Reset" disabled>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="1 4 1 10 7 10" />
-                    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
-                  </svg>
-                </button>
-                <button class="btn btn-primary btn-large timer-btn-primary" id="btn-start-pause" title="Mulai">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" id="icon-play">
-                    <polygon points="5 3 19 12 5 21 5 3" />
-                  </svg>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" id="icon-pause"
-                    style="display:none;">
-                    <rect x="6" y="4" width="4" height="16" />
-                    <rect x="14" y="4" width="4" height="16" />
-                  </svg>
-                </button>
-                <button class="btn btn-invisible" id="btn-skip" title="Lewati" disabled>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon points="5 4 15 12 5 20 5 4" />
-                    <line x1="19" y1="5" x2="19" y2="19" />
-                  </svg>
-                </button>
-              </div>
-              <div style="width: 36px; height: 36px;"></div> <!-- placeholder -->
+              <button class="btn btn-invisible" id="btn-reset" title="Reset" disabled>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="1 4 1 10 7 10" />
+                  <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+                </svg>
+              </button>
+              <button class="btn btn-primary btn-large timer-btn-primary" id="btn-start-pause" title="Mulai">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" id="icon-play">
+                  <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" id="icon-pause"
+                  style="display:none;">
+                  <rect x="6" y="4" width="4" height="16" />
+                  <rect x="14" y="4" width="4" height="16" />
+                </svg>
+              </button>
+              <button class="btn btn-invisible" id="btn-skip" title="Lewati" disabled>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="5 4 15 12 5 20 5 4" />
+                  <line x1="19" y1="5" x2="19" y2="19" />
+                </svg>
+              </button>
             </div>
             <!-- Session Counter -->
             <div class="session-counter mt-4 mx-auto" id="session-counter">

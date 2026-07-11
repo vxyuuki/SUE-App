@@ -830,6 +830,11 @@ body.mini-mode .timer-label {
   letter-spacing: 1.5px !important;
 }
 
+/* Header Mini Player Button Hover */
+#btn-mini-mode:hover {
+  color: var(--color-accent-fg) !important;
+}
+
 body.mini-mode .timer-controls {
   margin-top: 0 !important;
   display: flex !important;
@@ -841,17 +846,6 @@ body.mini-mode .timer-controls {
   max-width: none !important;
 }
 
-body.mini-mode .timer-controls > div {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 16px !important;
-}
-
-body.mini-mode .timer-controls > div:last-child {
-  display: none !important; /* Hide placeholder */
-}
-
 body.mini-mode .timer-controls .btn {
   width: 36px !important;
   height: 36px !important;
@@ -860,7 +854,7 @@ body.mini-mode .timer-controls .btn {
   align-items: center !important;
   justify-content: center !important;
   border-radius: 50% !important;
-  border: none !important;
+  border: 1px solid var(--color-border-default) !important;
   background: transparent !important;
   color: var(--color-fg-muted) !important;
   transition: all 0.2s ease !important;
@@ -869,6 +863,7 @@ body.mini-mode .timer-controls .btn {
 body.mini-mode .timer-controls .btn-primary {
   background: var(--color-success-fg) !important;
   color: var(--color-btn-primary-text, #ffffff) !important;
+  border-color: var(--color-success-emphasis) !important;
 }
 
 body.mini-mode .timer-controls .btn:hover {
