@@ -29,6 +29,49 @@ const DEFAULT_DATA = {
   flashcards: []
 };
 
+// --- IndexedDB for Avatar ---
+const DB_NAME = 'sue_db';
+const STORE_NAME = 'avatar_store';
+
+function initDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(DB_NAME, 1);
+    request.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        db.createObjectStore(STORE_NAME);
+      }
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function saveAvatarToDB(base64Str) {
+  try {
+    const db = await initDB();
+    const tx = db.transaction(STORE_NAME, 'readwrite');
+    tx.objectStore(STORE_NAME).put(base64Str, 'avatar');
+  } catch (err) {
+    console.error('Failed to save avatar to DB', err);
+  }
+}
+
+async function getAvatarFromDB() {
+  try {
+    const db = await initDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE_NAME, 'readonly');
+      const req = tx.objectStore(STORE_NAME).get('avatar');
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  } catch (err) {
+    console.error('Failed to get avatar from DB', err);
+    return null;
+  }
+}
+
 const MOTIVATIONAL_QUOTES = [
   { text: "Mulai dari yang kecil, tapi mulai sekarang.", author: "Anonim" },
   { text: "Fokus pada proses, bukan hanya hasil.", author: "Ryan Holiday" },
@@ -451,8 +494,8 @@ const DOM = {
   }
 
 
-function init() {
-  loadData();
+async function init() {
+  await loadData();
   setupEventListeners();
   setupFlashcardListeners();
   renderFlashcardsList();
@@ -474,13 +517,25 @@ function init() {
 }
 
 // --- Data Management ---
-function loadData() {
+async function loadData() {
   const saved = localStorage.getItem(STORAGE_KEY);
   if (saved) {
     try {
       appData = JSON.parse(saved);
       appData.settings = { ...DEFAULT_SETTINGS, ...(appData.settings || {}) };
       checkStreak();
+      
+      // Migrate avatar from localStorage to IndexedDB
+      if (appData.profile.avatar) {
+        await saveAvatarToDB(appData.profile.avatar);
+        appData.profile.avatar = null;
+        saveData(); // Save without avatar to free space
+      }
+      
+      const dbAvatar = await getAvatarFromDB();
+      if (dbAvatar) {
+        appData.profile.avatar = dbAvatar;
+      }
     } catch (e) {
       appData = JSON.parse(JSON.stringify(DEFAULT_DATA));
     }
@@ -490,7 +545,9 @@ function loadData() {
 }
 
 function saveData() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+  const dataToSave = JSON.parse(JSON.stringify(appData));
+  dataToSave.profile.avatar = null; // Prevent saving giant base64 to localStorage
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
 }
 
 function checkStreak() {
@@ -1451,10 +1508,11 @@ function setupEventListeners() {
   DOM.avatarInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
-      if (file.size > 5 * 1024 * 1024) return showToast('Max file size is 5MB', 'error');
+      if (file.size > 25 * 1024 * 1024) return showToast('Max file size is 25MB', 'error');
       const reader = new FileReader();
-      reader.onload = (event) => {
+      reader.onload = async (event) => {
         appData.profile.avatar = event.target.result;
+        await saveAvatarToDB(event.target.result);
         saveData();
         updateProfileUI();
         showToast('Avatar updated');
