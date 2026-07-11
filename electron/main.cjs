@@ -23,15 +23,35 @@ function createWindow() {
   }
 }
 
+const fs = require('fs');
+
 ipcMain.on('set-mini-mode', (event, isMini) => {
-  if (isMini) {
-    mainWindow.setMinimumSize(320, 200);
-    mainWindow.setSize(320, 200);
-    mainWindow.setAlwaysOnTop(true, 'floating');
-  } else {
-    mainWindow.setMinimumSize(800, 600);
-    mainWindow.setSize(1280, 800);
-    mainWindow.setAlwaysOnTop(false);
+  const logPath = path.join(__dirname, '../electron_log.txt');
+  try {
+    fs.appendFileSync(logPath, `Received set-mini-mode: ${isMini} at ${new Date().toISOString()}\n`);
+  } catch (e) {}
+
+  try {
+    if (isMini) {
+      if (mainWindow.isMaximized()) {
+        mainWindow.unmaximize();
+      }
+      mainWindow.setMinimumSize(340, 260);
+      mainWindow.setSize(340, 260);
+      mainWindow.setMaximumSize(340, 260);
+      mainWindow.setAlwaysOnTop(true, 'floating');
+      fs.appendFileSync(logPath, `Resized to mini mode successfully\n`);
+    } else {
+      mainWindow.setMaximumSize(9999, 9999);
+      mainWindow.setMinimumSize(800, 600);
+      mainWindow.setSize(1280, 800);
+      mainWindow.setAlwaysOnTop(false);
+      fs.appendFileSync(logPath, `Resized to normal mode successfully\n`);
+    }
+  } catch (err) {
+    try {
+      fs.appendFileSync(logPath, `ERROR in IPC: ${err.message}\n${err.stack}\n`);
+    } catch (e) {}
   }
 });
 
