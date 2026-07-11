@@ -12,6 +12,7 @@
   <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E" alt="Vite" />
   <img src="https://img.shields.io/badge/Vanilla_JS-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="Vanilla JS" />
   <img src="https://img.shields.io/badge/GitHub_Primer-24292F?style=for-the-badge&logo=github&logoColor=white" alt="Primer CSS" />
+  <img src="https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white" alt="Chart.js" />
 </p>
 
 ## ✨ About The Project
@@ -25,7 +26,8 @@ All data is stored **100% locally** on your machine. No internet connection requ
 - ⏱️ **Focus Timer (Pomodoro)**
   - Customizable focus sessions.
   - Auto-start timer mode for seamless flow between Focus and Break sessions.
-  - Interactive "GitHub Contribution" style heatmap to track your daily focus streaks.
+  - Interactive **Mini-Player mode** that stays out of your way while working.
+  - "GitHub Contribution" style heatmap and **Chart.js Analytics** for tracking productivity trends.
 - 📝 **Notion-Style Notes Editor**
   - Block-based text editing (text, checkboxes, image embeds).
   - Customizable header covers and tags.
@@ -34,6 +36,7 @@ All data is stored **100% locally** on your machine. No internet connection requ
   - Tinder-like swipe mechanics (Left for "Forgot", Right for "Remembered") for studying.
 - 🎨 **Aesthetics & Motivation**
   - GitHub-inspired UI with toggleable Dark and Light mode themes.
+  - **IndexedDB-powered profiles** supporting high-quality animated GIFs (up to 25MB).
   - Built-in library of 2000+ local offline motivational quotes.
 
 ## 🛠️ Installation & Setup
