@@ -990,7 +990,7 @@ function renderGraph() {
     const span = document.createElement('span');
     span.textContent = m.name;
     span.style.position = 'absolute';
-    span.style.left = `${m.weekIndex * 13}px`;
+    span.style.left = `${m.weekIndex * 19}px`;
     span.className = 'text-small color-fg-muted';
     DOM.monthsContainer.appendChild(span);
   });
