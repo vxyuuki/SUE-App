@@ -114,20 +114,15 @@
         <div class="avatar-container" id="avatar-container">
           <img class="avatar-image" id="avatar-image" alt="User Avatar" style="display:none;" />
           <div class="avatar-fallback" id="avatar-fallback">U</div>
-          <button class="avatar-upload-btn" id="avatar-upload-btn" title="Upload Avatar">
-            Edit
-          </button>
+          <div class="avatar-overlay d-flex flex-items-center flex-justify-center" id="avatar-overlay" title="Upload Avatar" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); border-radius: 50%; color: white; opacity: 0; transition: opacity 0.2s; cursor: pointer;">
+            <svg class="octicon" width="24" height="24" viewBox="0 0 16 16" fill="currentColor"><path d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm1.414 1.06a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354l-1.086-1.086ZM11.189 6.25 9.75 4.81l-6.286 6.287a.25.25 0 0 0-.064.108l-.558 1.953 1.953-.558a.249.249 0 0 0 .108-.064l6.286-6.286Z" /></svg>
+          </div>
           <input type="file" id="avatar-file-input" accept="image/jpeg,image/png,image/webp,image/gif"
             style="display:none;" />
         </div>
         <h1 class="vcard-names" style="display: flex; align-items: center; gap: 8px;">
           <span class="p-name vcard-fullname" id="profile-name" contenteditable="true" spellcheck="false"
             title="Klik untuk mengedit nama">User</span>
-          <svg class="octicon color-fg-muted" id="edit-name-icon" width="16" height="16" viewBox="0 0 16 16"
-            fill="currentColor" style="cursor:pointer;" title="Edit nama">
-            <path
-              d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.758l8.61-8.61Zm1.414 1.06a.25.25 0 0 0-.354 0L10.811 3.75l1.439 1.44 1.263-1.263a.25.25 0 0 0 0-.354l-1.086-1.086ZM11.189 6.25 9.75 4.81l-6.286 6.287a.25.25 0 0 0-.064.108l-.558 1.953 1.953-.558a.249.249 0 0 0 .108-.064l6.286-6.286Z" />
-          </svg>
         </h1>
       </div>
 

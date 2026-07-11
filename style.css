@@ -363,22 +363,8 @@ a:hover { text-decoration: underline; }
   font-weight: 700;
   color: var(--color-fg-muted);
 }
-.avatar-upload-btn {
-  position: absolute;
-  bottom: 32px;
-  left: 20px;
-  background-color: var(--color-canvas-default);
-  color: var(--color-fg-default);
-  border: 1px solid var(--color-border-default);
-  border-radius: 24px;
-  padding: 4px 12px;
-  font-size: 12px;
-  cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-.avatar-upload-btn:hover {
-  background-color: var(--color-canvas-subtle);
-}
+.avatar-container { position: relative; overflow: hidden; border-radius: 50%; }
+.avatar-container:hover .avatar-overlay { opacity: 1 !important; }
 .vcard-names { line-height: 1.25; }
 .vcard-fullname {
   font-size: 32px;
@@ -698,7 +684,6 @@ a:hover { text-decoration: underline; }
   .Layout-sidebar { width: 100%; }
   .avatar-container { width: 150px; height: 150px; margin: 0 auto; }
   .vcard-names-container { text-align: center; }
-  .avatar-upload-btn { left: auto; right: 0; bottom: 10px; }
 }
 
 

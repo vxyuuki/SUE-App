@@ -117,7 +117,6 @@ const DOM = {
   
   // Profile Sidebar
   avatarInput: document.getElementById('avatar-file-input'),
-  avatarUploadBtn: document.getElementById('avatar-upload-btn'),
   avatarImage: document.getElementById('avatar-image'),
   avatarFallback: document.getElementById('avatar-fallback'),
   profileName: document.getElementById('profile-name'),
@@ -1590,7 +1589,8 @@ function setupEventListeners() {
     });
   }
   
-  DOM.avatarUploadBtn.addEventListener('click', () => DOM.avatarInput.click());
+  DOM.avatarOverlay = document.getElementById('avatar-overlay');
+  if (DOM.avatarOverlay) DOM.avatarOverlay.addEventListener('click', () => DOM.avatarInput.click());
   DOM.avatarInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
