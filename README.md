@@ -8,6 +8,10 @@
 </p>
 
 <p align="center">
+  <img src="assets/preview2.png" alt="SUE Application Preview New Layout" width="800" style="border-radius: 8px;">
+</p>
+
+<p align="center">
   <img src="assets/preview.png" alt="SUE Application Preview" width="800" style="border-radius: 8px;">
 </p>
 
