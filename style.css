@@ -763,7 +763,7 @@ body.mini-mode .Layout-sidebar,
 body.mini-mode .UnderlineNav,
 body.mini-mode #view-timer > div:not(.timer-box),
 body.mini-mode .timer-box .Box-header,
-body.mini-mode .timer-box .session-counter,
+body.mini-mode #session-counter,
 body.mini-mode .timer-box .note-cover-area,
 body.mini-mode .view:not(#view-timer) {
   display: none !important;
@@ -807,49 +807,96 @@ body.mini-mode .timer-box {
 }
 
 body.mini-mode .timer-body {
-  padding: 8px 10px !important;
+  padding: 10px !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 4px !important;
+  gap: 12px !important;
 }
 
 body.mini-mode .timer-circle-wrapper {
-  width: 100px !important;
-  height: 100px !important;
+  width: 120px !important;
+  height: 120px !important;
   margin-bottom: 0 !important;
 }
 
 body.mini-mode .timer-time {
-  font-size: 26px !important;
+  font-size: 28px !important;
 }
 
 body.mini-mode .timer-label {
-  font-size: 9px !important;
+  font-size: 10px !important;
   letter-spacing: 1.5px !important;
 }
 
 body.mini-mode .timer-controls {
   margin-top: 0 !important;
-  max-width: 200px !important;
-  gap: 4px !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 16px !important;
+  width: auto !important;
+  max-width: none !important;
 }
 
-body.mini-mode .timer-controls .btn-large,
-body.mini-mode .timer-controls .timer-btn-primary {
+body.mini-mode .timer-controls > div {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 16px !important;
+}
+
+body.mini-mode .timer-controls > div:last-child {
+  display: none !important; /* Hide placeholder */
+}
+
+body.mini-mode .timer-controls .btn {
   width: 36px !important;
   height: 36px !important;
   padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  border: none !important;
+  background: transparent !important;
+  color: var(--color-fg-muted) !important;
+  transition: all 0.2s ease !important;
 }
 
-body.mini-mode .timer-controls .timer-btn-primary svg {
-  width: 16px !important;
-  height: 16px !important;
+body.mini-mode .timer-controls .btn-primary {
+  background: var(--color-success-fg) !important;
+  color: var(--color-btn-primary-text, #ffffff) !important;
 }
 
-body.mini-mode .timer-controls .btn-invisible svg {
-  width: 14px !important;
-  height: 14px !important;
+body.mini-mode .timer-controls .btn:hover {
+  background-color: var(--color-btn-hover-bg, rgba(175, 184, 193, 0.2)) !important;
+  color: var(--color-fg-default) !important;
+}
+
+body.mini-mode .timer-controls .btn-primary:hover {
+  background: var(--color-success-emphasis) !important;
+}
+
+body.mini-mode .timer-controls .btn:disabled {
+  opacity: 0.3 !important;
+  background: transparent !important;
+  cursor: not-allowed !important;
+}
+
+body.mini-mode .timer-controls .btn-primary:disabled {
+  background: var(--color-success-fg) !important;
+  opacity: 0.5 !important;
+}
+
+body.mini-mode .timer-controls .btn:active {
+  transform: scale(0.92) !important;
+}
+
+body.mini-mode .timer-controls svg {
+  width: 18px !important;
+  height: 18px !important;
 }
 

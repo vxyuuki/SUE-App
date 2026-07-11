@@ -36,15 +36,26 @@ ipcMain.on('set-mini-mode', (event, isMini) => {
       if (mainWindow.isMaximized()) {
         mainWindow.unmaximize();
       }
-      mainWindow.setMinimumSize(340, 260);
+      // Clear limits first to avoid Windows resize rejection
+      mainWindow.setMinimumSize(0, 0);
+      mainWindow.setMaximumSize(9999, 9999);
+      
       mainWindow.setSize(340, 260);
+      
+      // Set new limits
+      mainWindow.setMinimumSize(340, 260);
       mainWindow.setMaximumSize(340, 260);
       mainWindow.setAlwaysOnTop(true, 'floating');
       fs.appendFileSync(logPath, `Resized to mini mode successfully\n`);
     } else {
+      // Clear limits
       mainWindow.setMaximumSize(9999, 9999);
-      mainWindow.setMinimumSize(800, 600);
+      mainWindow.setMinimumSize(0, 0);
+      
       mainWindow.setSize(1280, 800);
+      
+      // Set normal limits
+      mainWindow.setMinimumSize(800, 600);
       mainWindow.setAlwaysOnTop(false);
       fs.appendFileSync(logPath, `Resized to normal mode successfully\n`);
     }
