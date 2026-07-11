@@ -1020,7 +1020,8 @@ function renderAnalytics() {
         pointBackgroundColor: lineColor,
         pointBorderColor: isDark ? '#0d1117' : '#ffffff',
         pointBorderWidth: 2,
-        pointRadius: 4,
+        pointRadius: 0,
+        pointHitRadius: 15,
         pointHoverRadius: 6,
         fill: true,
         tension: 0.3 // Smooth curves
@@ -1034,6 +1035,7 @@ function renderAnalytics() {
           display: false
         },
         tooltip: {
+          yAlign: 'bottom',
           backgroundColor: isDark ? '#161b22' : '#ffffff',
           titleColor: isDark ? '#c9d1d9' : '#24292f',
           bodyColor: isDark ? '#8b949e' : '#57606a',
