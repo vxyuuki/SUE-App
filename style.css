@@ -900,3 +900,31 @@ body.mini-mode .timer-controls svg {
   height: 18px !important;
 }
 
+/* Mini Mode Restore Button */
+#btn-mini-mode-restore {
+  display: none !important;
+}
+
+body.mini-mode #btn-mini-mode-restore {
+  display: inline-flex !important;
+}
+
+/* Analytics Panel */
+.analytics-panel {
+  background-color: var(--color-canvas-subtle);
+  border: 1px solid var(--color-border-default);
+}
+
+.analytics-panel #weekly-chart rect {
+  transition: opacity 0.2s ease, fill 0.2s ease;
+}
+
+.analytics-panel #weekly-chart rect:hover {
+  opacity: 0.85;
+}
+
+.progress {
+  display: flex;
+  overflow: hidden;
+}
+

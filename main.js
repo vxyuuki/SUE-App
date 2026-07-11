@@ -460,6 +460,7 @@ function init() {
   updateSettingsUI();
   renderCalendar(currentDate);
   renderGraph();
+  renderAnalytics();
   renderNotes();
   setTimerType('focus');
   changeQuote();
@@ -725,6 +726,7 @@ function completeTimer(skipped = false) {
     updateProfileUI();
     renderGraph();
     renderCalendar(currentDate);
+    renderAnalytics();
   }
   
   if (timerState.type === 'focus') {
@@ -941,6 +943,166 @@ function renderGraph() {
   
   const wrapper = document.querySelector('.contribution-graph-wrapper');
   if (wrapper) wrapper.scrollLeft = wrapper.scrollWidth;
+}
+
+// --- Analytics & Study Tracker ---
+function renderAnalytics() {
+  const chartSvg = document.getElementById('weekly-chart');
+  if (!chartSvg) return;
+
+  // Clear previous elements except <defs>
+  const defs = chartSvg.querySelector('defs');
+  chartSvg.innerHTML = '';
+  if (defs) chartSvg.appendChild(defs);
+
+  // Get last 7 days (including today)
+  const last7Days = [];
+  const daysOfWeek = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+  const dayNames = [];
+  
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const localYear = d.getFullYear();
+    const localMonth = (d.getMonth() + 1).toString().padStart(2, '0');
+    const localDay = d.getDate().toString().padStart(2, '0');
+    const dateStr = `${localYear}-${localMonth}-${localDay}`;
+    last7Days.push(dateStr);
+    dayNames.push(daysOfWeek[d.getDay()]);
+  }
+
+  // Aggregate time per day from appData.sessions
+  const focusTimePerDay = {};
+  const breakTimePerDay = {};
+  let totalFocusMins = 0;
+  let totalBreakMins = 0;
+
+  last7Days.forEach(date => {
+    focusTimePerDay[date] = 0;
+    breakTimePerDay[date] = 0;
+  });
+
+  if (appData.sessions) {
+    appData.sessions.forEach(s => {
+      if (s.date && focusTimePerDay[s.date] !== undefined) {
+        if (s.type === 'focus' && s.completed) {
+          focusTimePerDay[s.date] += s.duration;
+          totalFocusMins += s.duration;
+        } else if (s.type !== 'focus') {
+          breakTimePerDay[s.date] += s.duration;
+          totalBreakMins += s.duration;
+        }
+      }
+    });
+  }
+
+  // Draw chart
+  const maxVal = Math.max(...Object.values(focusTimePerDay), 60); // min max height of 60 mins for nice scale
+  const chartHeight = 120;
+  const chartWidth = 400;
+  const paddingLeft = 30;
+  const paddingRight = 10;
+  const paddingTop = 15;
+  const paddingBottom = 25;
+  const graphWidth = chartWidth - paddingLeft - paddingRight;
+  const graphHeight = chartHeight - paddingTop;
+
+  // Draw Y-Axis grid lines
+  const gridLines = 3;
+  for (let i = 0; i <= gridLines; i++) {
+    const val = Math.round((maxVal / gridLines) * i);
+    const y = paddingTop + graphHeight - (i / gridLines) * graphHeight;
+    
+    // Line
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', paddingLeft);
+    line.setAttribute('y1', y);
+    line.setAttribute('x2', chartWidth - paddingRight);
+    line.setAttribute('y2', y);
+    line.setAttribute('stroke', 'var(--color-border-muted)');
+    line.setAttribute('stroke-dasharray', '3,3');
+    chartSvg.appendChild(line);
+
+    // Label
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    text.setAttribute('x', paddingLeft - 5);
+    text.setAttribute('y', y + 4);
+    text.setAttribute('text-anchor', 'end');
+    text.setAttribute('fill', 'var(--color-fg-muted)');
+    text.setAttribute('font-size', '10px');
+    text.textContent = `${val}m`;
+    chartSvg.appendChild(text);
+  }
+
+  // Draw Bars and X-Axis labels
+  const barWidth = 28;
+  const numDays = 7;
+  const colWidth = graphWidth / numDays;
+
+  last7Days.forEach((date, i) => {
+    const val = focusTimePerDay[date] || 0;
+    const barHeight = (val / maxVal) * graphHeight;
+    const x = paddingLeft + (i * colWidth) + (colWidth - barWidth) / 2;
+    const y = paddingTop + graphHeight - barHeight;
+
+    // Draw Bar
+    if (val > 0) {
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rect.setAttribute('x', x);
+      rect.setAttribute('y', y);
+      rect.setAttribute('width', barWidth);
+      rect.setAttribute('height', barHeight);
+      rect.setAttribute('rx', '4');
+      rect.setAttribute('ry', '4');
+      rect.setAttribute('fill', 'url(#barGradient)');
+      rect.style.cursor = 'pointer';
+      
+      const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+      title.textContent = `${val} menit belajar pada ${date}`;
+      rect.appendChild(title);
+
+      chartSvg.appendChild(rect);
+    } else {
+      // Empty placeholder bar
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rect.setAttribute('x', x);
+      rect.setAttribute('y', paddingTop + graphHeight - 2);
+      rect.setAttribute('width', barWidth);
+      rect.setAttribute('height', 2);
+      rect.setAttribute('rx', '1');
+      rect.setAttribute('fill', 'var(--color-border-muted)');
+      chartSvg.appendChild(rect);
+    }
+
+    // X-Axis Label
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    text.setAttribute('x', x + barWidth / 2);
+    text.setAttribute('y', chartHeight + 15);
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('fill', 'var(--color-fg-muted)');
+    text.setAttribute('font-size', '10px');
+    text.textContent = dayNames[i];
+    chartSvg.appendChild(text);
+  });
+
+  // Populate Right Column statistics
+  document.getElementById('analytics-total-time').textContent = `${totalFocusMins}m`;
+  const averageMins = Math.round(totalFocusMins / 7);
+  document.getElementById('analytics-daily-average').textContent = `${averageMins}m/hari`;
+
+  // Focus vs Break Ratio
+  const totalRatioMins = totalFocusMins + totalBreakMins;
+  const focusPercent = totalRatioMins > 0 ? Math.round((totalFocusMins / totalRatioMins) * 100) : 100;
+  const breakPercent = 100 - focusPercent;
+  
+  const ratioFocusBar = document.getElementById('analytics-ratio-focus');
+  if (ratioFocusBar) {
+    ratioFocusBar.style.width = `${focusPercent}%`;
+  }
+  const ratioText = document.getElementById('analytics-ratio-text');
+  if (ratioText) {
+    ratioText.textContent = `${focusPercent}:${breakPercent}`;
+  }
 }
 
 // --- Calendar ---
@@ -1249,6 +1411,8 @@ function setupEventListeners() {
   DOM.btnReset.addEventListener('click', resetTimer);
   DOM.btnSkip.addEventListener('click', () => completeTimer(true));
   DOM.btnMiniMode.addEventListener('click', toggleMiniMode);
+  const restoreBtn = document.getElementById('btn-mini-mode-restore');
+  if (restoreBtn) restoreBtn.addEventListener('click', toggleMiniMode);
   
   DOM.tabs.forEach(tab => {
     tab.addEventListener('click', () => {
