@@ -596,7 +596,7 @@ function getDuration(type) {
   }
 }
 
-function toggleMiniMode() {
+let isMiniMode = false;`nfunction toggleMiniMode() {
   isMiniMode = !isMiniMode;
   if (isMiniMode) {
     document.body.classList.add('mini-mode');
