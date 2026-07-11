@@ -946,14 +946,11 @@ function renderGraph() {
 }
 
 // --- Analytics & Study Tracker ---
-function renderAnalytics() {
-  const chartSvg = document.getElementById('weekly-chart');
-  if (!chartSvg) return;
+let analyticsChart = null;
 
-  // Clear previous elements except <defs>
-  const defs = chartSvg.querySelector('defs');
-  chartSvg.innerHTML = '';
-  if (defs) chartSvg.appendChild(defs);
+function renderAnalytics() {
+  const canvas = document.getElementById('weekly-chart-canvas');
+  if (!canvas) return;
 
   // Get last 7 days (including today)
   const last7Days = [];
@@ -996,93 +993,93 @@ function renderAnalytics() {
     });
   }
 
-  // Draw chart
-  const maxVal = Math.max(...Object.values(focusTimePerDay), 60); // min max height of 60 mins for nice scale
-  const chartHeight = 120;
-  const chartWidth = 400;
-  const paddingLeft = 30;
-  const paddingRight = 10;
-  const paddingTop = 15;
-  const paddingBottom = 25;
-  const graphWidth = chartWidth - paddingLeft - paddingRight;
-  const graphHeight = chartHeight - paddingTop;
+  const chartData = last7Days.map(date => focusTimePerDay[date]);
 
-  // Draw Y-Axis grid lines
-  const gridLines = 3;
-  for (let i = 0; i <= gridLines; i++) {
-    const val = Math.round((maxVal / gridLines) * i);
-    const y = paddingTop + graphHeight - (i / gridLines) * graphHeight;
-    
-    // Line
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line.setAttribute('x1', paddingLeft);
-    line.setAttribute('y1', y);
-    line.setAttribute('x2', chartWidth - paddingRight);
-    line.setAttribute('y2', y);
-    line.setAttribute('stroke', 'var(--color-border-muted)');
-    line.setAttribute('stroke-dasharray', '3,3');
-    chartSvg.appendChild(line);
-
-    // Label
-    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text.setAttribute('x', paddingLeft - 5);
-    text.setAttribute('y', y + 4);
-    text.setAttribute('text-anchor', 'end');
-    text.setAttribute('fill', 'var(--color-fg-muted)');
-    text.setAttribute('font-size', '10px');
-    text.textContent = `${val}m`;
-    chartSvg.appendChild(text);
+  // Chart.js Configuration
+  if (analyticsChart) {
+    analyticsChart.destroy();
   }
 
-  // Draw Bars and X-Axis labels
-  const barWidth = 28;
-  const numDays = 7;
-  const colWidth = graphWidth / numDays;
+  // Determine colors based on the theme
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark' || !document.documentElement.hasAttribute('data-theme');
+  const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+  const textColor = isDark ? '#8b949e' : '#57606a'; // Primer text-muted
+  const lineColor = '#2ea043'; // Primer success green
 
-  last7Days.forEach((date, i) => {
-    const val = focusTimePerDay[date] || 0;
-    const barHeight = (val / maxVal) * graphHeight;
-    const x = paddingLeft + (i * colWidth) + (colWidth - barWidth) / 2;
-    const y = paddingTop + graphHeight - barHeight;
-
-    // Draw Bar
-    if (val > 0) {
-      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-      rect.setAttribute('x', x);
-      rect.setAttribute('y', y);
-      rect.setAttribute('width', barWidth);
-      rect.setAttribute('height', barHeight);
-      rect.setAttribute('rx', '4');
-      rect.setAttribute('ry', '4');
-      rect.setAttribute('fill', 'url(#barGradient)');
-      rect.style.cursor = 'pointer';
-      
-      const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-      title.textContent = `${val} menit belajar pada ${date}`;
-      rect.appendChild(title);
-
-      chartSvg.appendChild(rect);
-    } else {
-      // Empty placeholder bar
-      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-      rect.setAttribute('x', x);
-      rect.setAttribute('y', paddingTop + graphHeight - 2);
-      rect.setAttribute('width', barWidth);
-      rect.setAttribute('height', 2);
-      rect.setAttribute('rx', '1');
-      rect.setAttribute('fill', 'var(--color-border-muted)');
-      chartSvg.appendChild(rect);
+  const ctx = canvas.getContext('2d');
+  analyticsChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: dayNames,
+      datasets: [{
+        label: 'Fokus (Menit)',
+        data: chartData,
+        borderColor: lineColor,
+        backgroundColor: 'rgba(46, 160, 67, 0.2)', // Light green fill
+        borderWidth: 2,
+        pointBackgroundColor: lineColor,
+        pointBorderColor: isDark ? '#0d1117' : '#ffffff',
+        pointBorderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        fill: true,
+        tension: 0.3 // Smooth curves
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          backgroundColor: isDark ? '#161b22' : '#ffffff',
+          titleColor: isDark ? '#c9d1d9' : '#24292f',
+          bodyColor: isDark ? '#8b949e' : '#57606a',
+          borderColor: isDark ? '#30363d' : '#d0d7de',
+          borderWidth: 1,
+          displayColors: false,
+          callbacks: {
+            label: function(context) {
+              return context.parsed.y + ' Menit';
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: {
+            display: false,
+            drawBorder: false
+          },
+          ticks: {
+            color: textColor,
+            font: {
+              family: 'JetBrains Mono',
+              size: 10
+            }
+          }
+        },
+        y: {
+          beginAtZero: true,
+          suggestedMax: 60,
+          grid: {
+            color: gridColor,
+            drawBorder: false,
+            borderDash: [3, 3]
+          },
+          ticks: {
+            color: textColor,
+            font: {
+              family: 'JetBrains Mono',
+              size: 10
+            },
+            stepSize: 20
+          }
+        }
+      }
     }
-
-    // X-Axis Label
-    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text.setAttribute('x', x + barWidth / 2);
-    text.setAttribute('y', chartHeight + 15);
-    text.setAttribute('text-anchor', 'middle');
-    text.setAttribute('fill', 'var(--color-fg-muted)');
-    text.setAttribute('font-size', '10px');
-    text.textContent = dayNames[i];
-    chartSvg.appendChild(text);
   });
 
   // Populate Right Column statistics
