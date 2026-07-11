@@ -8,6 +8,10 @@
 </p>
 
 <p align="center">
+  <img src="assets/preview.png" alt="SUE Application Preview" width="800" style="border-radius: 8px;">
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/Electron-47848F?style=for-the-badge&logo=electron&logoColor=white" alt="Electron" />
   <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E" alt="Vite" />
   <img src="https://img.shields.io/badge/Vanilla_JS-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="Vanilla JS" />
