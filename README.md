@@ -88,5 +88,4 @@ To run SUE locally on your machine:
 
 ---
 <div align="center">
-  Made with ❤️ by <a href="https://github.com/vxyuuki">Kiki (vxyuuki)</a>
 </div>
