@@ -596,6 +596,28 @@ async function init() {
       Notification.requestPermission();
     }
   }
+
+  // Anime.js On-Scroll Animations using Intersection Observer
+  const scrollElements = document.querySelectorAll('.Box.mt-3, .graph-container, .calendar-container');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        anime({
+          targets: entry.target,
+          translateY: [30, 0],
+          opacity: [0, 1],
+          duration: 800,
+          easing: 'easeOutExpo'
+        });
+        observer.unobserve(entry.target); // Animasi sekali saja
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  scrollElements.forEach(el => {
+    el.style.opacity = '0'; // Hide initially for animation
+    observer.observe(el);
+  });
 }
 
 // --- Data Management ---
@@ -707,6 +729,7 @@ function showNotification(title, body) {
 }
 
 // --- Navigation ---
+
 function switchView(viewId) {
   DOM.navBtns.forEach(btn => {
     if (btn.dataset.view === viewId) btn.classList.add('active');
@@ -714,8 +737,22 @@ function switchView(viewId) {
   });
   
   DOM.views.forEach(view => {
-    if (view.id === `view-${viewId}`) view.classList.add('active');
-    else view.classList.remove('active');
+    if (view.id === `view-${viewId}`) {
+      view.classList.add('active');
+      view.style.display = 'block'; // Make sure display is block before animating
+      // Anime.js Tab Switch Animation
+      anime({
+        targets: view,
+        opacity: [0, 1],
+        translateY: [20, 0],
+        duration: 600,
+        easing: 'easeOutExpo'
+      });
+    } else {
+      view.classList.remove('active');
+      view.style.display = 'none';
+      view.style.opacity = 0;
+    }
   });
   currentView = viewId;
   
@@ -777,6 +814,18 @@ function setTimerType(type) {
     timerCircle.style.stroke = 'var(--color-success-fg)';
   } else {
     timerCircle.style.stroke = 'var(--color-accent-fg)';
+  }
+  
+  // Anime.js pop animation for the timer
+  const timerContainer = document.querySelector('.timer-circle');
+  if (timerContainer) {
+    anime({
+      targets: timerContainer,
+      scale: [0.9, 1],
+      opacity: [0.5, 1],
+      duration: 800,
+      easing: 'easeOutElastic(1, .5)'
+    });
   }
 }
 
@@ -897,6 +946,28 @@ function updateSessionDots() {
   DOM.sessionText.textContent = `Sesi ${timerState.focusCount + 1} / 4`;
 }
 
+// --- SplitText Helper ---
+function animateSplitText(element) {
+  const text = element.textContent;
+  element.innerHTML = '';
+  text.split(' ').forEach((word, i) => {
+    const wordSpan = document.createElement('span');
+    wordSpan.style.display = 'inline-block';
+    wordSpan.style.whiteSpace = 'pre';
+    wordSpan.textContent = word + ' ';
+    element.appendChild(wordSpan);
+  });
+  
+  anime({
+    targets: element.querySelectorAll('span'),
+    translateY: [20, 0],
+    opacity: [0, 1],
+    duration: 800,
+    delay: anime.stagger(50),
+    easing: 'easeOutQuint'
+  });
+}
+
 async function changeQuote() {
   try {
     if (!window.loadedQuotes) {
@@ -913,28 +984,31 @@ async function changeQuote() {
       throw new Error('No quotes loaded');
     }
 
-    DOM.quoteText.style.opacity = '0';
-    DOM.quoteAuthor.style.opacity = '0';
-    
-    setTimeout(() => {
-      DOM.quoteText.textContent = `"${q.text}"`;
-      DOM.quoteAuthor.textContent = `— ${q.author || 'Unknown'}`;
-      DOM.quoteText.style.opacity = '1';
-      DOM.quoteAuthor.style.opacity = '1';
-    }, 300);
-    
-  } catch (e) {
-    // Fallback ke kutipan lokal jika fetch gagal
-    const q = MOTIVATIONAL_QUOTES[Math.floor(Math.random() * MOTIVATIONAL_QUOTES.length)];
-    DOM.quoteText.style.opacity = '0';
-    DOM.quoteAuthor.style.opacity = '0';
-    
-    setTimeout(() => {
-      DOM.quoteText.textContent = `"${q.text}"`;
-      DOM.quoteAuthor.textContent = `— ${q.author}`;
-      DOM.quoteText.style.opacity = '1';
-      DOM.quoteAuthor.style.opacity = '1';
-    }, 300);
+    anime({
+      targets: [DOM.quoteText, DOM.quoteAuthor],
+      opacity: 0,
+      duration: 300,
+      easing: 'linear',
+      complete: function() {
+        DOM.quoteText.textContent = `"${q.text}"`;
+        DOM.quoteAuthor.textContent = `— ${q.author || 'Unknown'}`;
+        DOM.quoteAuthor.style.opacity = '0';
+        DOM.quoteText.style.opacity = '1';
+        
+        animateSplitText(DOM.quoteText);
+        
+        anime({
+          targets: DOM.quoteAuthor,
+          opacity: [0, 1],
+          translateY: [10, 0],
+          delay: 600,
+          duration: 800,
+          easing: 'easeOutExpo'
+        });
+      }
+    });
+  } catch (error) {
+    console.error('Error loading quotes:', error);
   }
 }
 
