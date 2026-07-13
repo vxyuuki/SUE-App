@@ -817,7 +817,7 @@ function setTimerType(type) {
   }
   
   // Anime.js pop animation for the timer
-  const timerContainer = document.querySelector('.timer-circle');
+  const timerContainer = document.querySelector('.anime-widget-container');
   if (timerContainer) {
     anime({
       targets: timerContainer,
@@ -854,6 +854,9 @@ function startTimer() {
   DOM.btnReset.disabled = false;
   DOM.btnSkip.disabled = false;
   
+  const stateEl = document.getElementById('anime-running-state');
+  if (stateEl) stateEl.textContent = 'true';
+  
   timerState.interval = setInterval(() => {
     timerState.timeLeft--;
     updateTimerDisplay();
@@ -868,6 +871,9 @@ function pauseTimer() {
   DOM.iconPlay.style.display = 'block';
   DOM.iconPause.style.display = 'none';
   document.title = `Paused - SUE`;
+  
+  const stateEl = document.getElementById('anime-running-state');
+  if (stateEl) stateEl.textContent = 'false';
   updateHeaderTimerStatus();
 }
 
