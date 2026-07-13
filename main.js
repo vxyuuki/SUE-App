@@ -646,8 +646,8 @@ function setupTextScrambleLoops() {
     }, 4000);
   }
 
-  // Headings (Catatan, Statistik, Flashcard, Pomodoro Timer): 8s
-  const headings = document.querySelectorAll('h3.Box-title, h2.h4');
+  // Headings (Catatan, Statistik, Flashcard, Pomodoro Timer) and Tabs: 8s
+  const headings = document.querySelectorAll('h3.Box-title, h2.h4, .SegmentedControl-content');
   setInterval(() => {
     headings.forEach(h => {
       const originalText = h.getAttribute('data-text') || h.textContent.trim();
