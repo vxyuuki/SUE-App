@@ -597,7 +597,6 @@ async function init() {
   renderAnalytics();
   renderNotes();
   setTimerType('focus');
-  changeQuote();
   setInterval(changeQuote, 7000);
   if (window.applyLanguage) window.applyLanguage(); // Ganti kata motivasi setiap 7 detik (via API)
   
@@ -1051,6 +1050,9 @@ async function changeQuote() {
       throw new Error('No quotes loaded');
     }
 
+    anime.remove([DOM.quoteText, DOM.quoteAuthor]);
+    anime.remove(DOM.quoteText.querySelectorAll('span'));
+
     anime({
       targets: [DOM.quoteText, DOM.quoteAuthor],
       opacity: 0,
@@ -1076,6 +1078,9 @@ async function changeQuote() {
     });
   } catch (error) {
     console.error('Error loading quotes:', error);
+    if(DOM.quoteText) {
+      DOM.quoteText.textContent = "Error: " + error.message;
+    }
   }
 }
 
