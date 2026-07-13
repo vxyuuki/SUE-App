@@ -18,6 +18,11 @@
   --glass-bg: rgba(13, 17, 23, 0.6);
   --glass-border: rgba(255, 255, 255, 0.05);
   
+  --blob-1: rgba(88, 166, 255, 0.5);
+  --blob-2: rgba(63, 185, 80, 0.5);
+  --blob-3: rgba(188, 140, 255, 0.5);
+  --blob-4: rgba(88, 166, 255, 0.4);
+  
   /* GitHub Calendar Colors (Dark) */
   --color-calendar-graph-day-bg: #161b22;
   --color-calendar-graph-day-border: rgba(27,31,35,0.06);
@@ -51,6 +56,11 @@
   
   --glass-bg: rgba(255, 255, 255, 0.7);
   --glass-border: rgba(255, 255, 255, 0.2);
+  
+  --blob-1: rgba(9, 105, 218, 0.7);
+  --blob-2: rgba(26, 127, 55, 0.7);
+  --blob-3: rgba(130, 80, 223, 0.7);
+  --blob-4: rgba(9, 105, 218, 0.6);
   
   --color-calendar-graph-day-bg: #ebedf0;
   --color-calendar-graph-day-border: rgba(27,31,35,0.06);
@@ -997,10 +1007,10 @@ body.mini-mode #btn-mini-mode-restore {
   mix-blend-mode: multiply;
   opacity: 0.4;
 }
-.blob-1 { width: 50vw; height: 50vw; top: -10vw; left: -10vw; }
-.blob-2 { width: 40vw; height: 40vw; bottom: -10vw; right: -10vw; }
-.blob-3 { width: 60vw; height: 60vw; top: 20%; left: 40%; }
-.blob-4 { width: 35vw; height: 35vw; bottom: 20%; left: 10%; }
+.blob-1 { width: 50vw; height: 50vw; top: -10vw; left: -10vw; background-color: var(--blob-1); }
+.blob-2 { width: 40vw; height: 40vw; bottom: -10vw; right: -10vw; background-color: var(--blob-2); }
+.blob-3 { width: 60vw; height: 60vw; top: 20%; left: 40%; background-color: var(--blob-3); }
+.blob-4 { width: 35vw; height: 35vw; bottom: 20%; left: 10%; background-color: var(--blob-4); }
 
 .anime-widget-value {
   color: var(--timer-widget-text);
