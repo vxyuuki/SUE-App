@@ -608,6 +608,7 @@ async function init() {
 
   applyGlobalAnimations();
   setupTextScrambleLoops();
+  initAuroraBackground();
 }
 
 function setupTextScrambleLoops() {
@@ -1956,3 +1957,32 @@ function updateHeaderTimerStatus() {
 
 document.addEventListener('DOMContentLoaded', init);
 
+function initAuroraBackground() {
+  const container = document.createElement('div');
+  container.id = 'aurora-bg';
+  
+  for (let i = 1; i <= 4; i++) {
+    const blob = document.createElement('div');
+    blob.className = `aurora-blob blob-${i}`;
+    container.appendChild(blob);
+  }
+  
+  document.body.insertBefore(container, document.body.firstChild);
+
+  const blobs = document.querySelectorAll('.aurora-blob');
+  
+  blobs.forEach(blob => {
+    function animateBlob() {
+      anime({
+        targets: blob,
+        translateX: () => anime.random(-300, 300),
+        translateY: () => anime.random(-300, 300),
+        scale: () => anime.random(0.8, 1.5),
+        duration: () => anime.random(10000, 20000),
+        easing: 'easeInOutSine',
+        complete: animateBlob
+      });
+    }
+    animateBlob();
+  });
+}

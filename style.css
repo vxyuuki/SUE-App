@@ -15,6 +15,9 @@
   --color-danger-emphasis: #da3633;
   --color-success-fg: #3fb950;
   
+  --glass-bg: rgba(13, 17, 23, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  
   /* GitHub Calendar Colors (Dark) */
   --color-calendar-graph-day-bg: #161b22;
   --color-calendar-graph-day-border: rgba(27,31,35,0.06);
@@ -45,6 +48,9 @@
   --color-danger-fg: #cf222e;
   --color-danger-emphasis: #cf222e;
   --color-success-fg: #1a7f37;
+  
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.2);
   
   --color-calendar-graph-day-bg: #ebedf0;
   --color-calendar-graph-day-border: rgba(27,31,35,0.06);
@@ -140,8 +146,10 @@ a:hover { text-decoration: underline; }
 
 /* Header */
 .AppHeader {
-  background-color: var(--color-canvas-subtle);
-  border-bottom: 1px solid var(--color-border-muted);
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--glass-border);
   padding: 0 24px;
   color: var(--color-fg-default);
   position: sticky;
@@ -487,8 +495,10 @@ a:hover { text-decoration: underline; }
 
 /* Box Components */
 .Box {
-  background-color: var(--color-canvas-default);
-  border: 1px solid var(--color-border-default);
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
   border-radius: 6px;
 }
 .Box-header {
@@ -959,6 +969,39 @@ body.mini-mode #btn-mini-mode-restore {
   margin-bottom: 12px;
   text-align: left;
 }
+
+/* Aurora Background */
+#aurora-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background-color: var(--color-canvas-default);
+}
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.6;
+  mix-blend-mode: screen;
+}
+:root .aurora-blob {
+  mix-blend-mode: color-dodge;
+  opacity: 0.25;
+}
+[data-theme="light"] .aurora-blob {
+  mix-blend-mode: multiply;
+  opacity: 0.4;
+}
+.blob-1 { width: 50vw; height: 50vw; top: -10vw; left: -10vw; }
+.blob-2 { width: 40vw; height: 40vw; bottom: -10vw; right: -10vw; }
+.blob-3 { width: 60vw; height: 60vw; top: 20%; left: 40%; }
+.blob-4 { width: 35vw; height: 35vw; bottom: 20%; left: 10%; }
+
 .anime-widget-value {
   color: var(--timer-widget-text);
   font-size: 48px;
