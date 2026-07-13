@@ -1064,17 +1064,30 @@ function updateSessionDots() {
 
 // --- SplitText Helper ---
 function animateScrambleText(element, finalString, duration = 1200) {
+  if (document.activeElement === element) {
+    element.textContent = finalString;
+    return;
+  }
+  
   const chars = '!<>-_\\\\/[]{}—=+*^?#________';
   const length = finalString.length;
   const obj = { p: 0 };
   
-  anime.remove(obj);
-  anime({
+  if (element.scrambleAnime) {
+    element.scrambleAnime.pause();
+  }
+  
+  element.scrambleAnime = anime({
     targets: obj,
     p: 1,
     duration: duration,
     easing: 'linear',
     update: function() {
+      if (document.activeElement === element) {
+        element.textContent = finalString;
+        element.scrambleAnime.pause();
+        return;
+      }
       let currentString = '';
       for (let i = 0; i < length; i++) {
         if (i < Math.floor(obj.p * length)) {
