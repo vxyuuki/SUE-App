@@ -46,6 +46,7 @@ All data is stored **100% locally** on your machine. No internet connection requ
 - 🎨 **Aesthetics & Motivation (Awwwards-Style)**
   - GitHub-inspired UI elevated with **Glassmorphism** panels and an animated **Aurora Mesh Gradient** background.
   - Cyber-minimalist **dynamic text scrambling** loops powered by Anime.js.
+  - Silky smooth **staggered page transitions** and **scroll reveal** animations.
   - Toggleable Dark and Light mode themes that seamlessly adapt the aurora background colors.
   - 🌐 **Bilingual Support (ID/EN)**: Seamlessly switch between Bahasa Indonesia and English interfaces.
   - **IndexedDB-powered profiles** supporting high-quality animated GIFs (up to 25MB).
