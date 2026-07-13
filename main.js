@@ -1038,9 +1038,7 @@ async function changeQuote() {
   try {
     if (!window.loadedQuotes) {
       const response = await fetch('./quotes.json');
-      if (response.ok) {
-        window.loadedQuotes = await response.json();
-      }
+      window.loadedQuotes = await response.json();
     }
     
     let q;
