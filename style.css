@@ -944,13 +944,13 @@ body.mini-mode #btn-mini-mode-restore {
   gap: 16px;
 }
 .anime-widget-box {
-  background-color: var(--timer-widget-box-bg);
+  background-color: transparent;
   border: none; /* Removed border */
   border-radius: 12px;
   padding: 24px;
   flex: 1;
   text-align: right;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Added subtle outer drop shadow for depth instead of border */
+  box-shadow: none;
   transition: background-color 0.3s ease;
 }
 .anime-widget-label {
