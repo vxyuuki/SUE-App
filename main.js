@@ -1,3 +1,5 @@
+import { animate, stagger, splitText } from 'animejs';
+
 // SUE - Show Up Everyday | Main Logic (GitHub Theme)
 
 // --- Constants & Data ---
@@ -613,12 +615,8 @@ async function init() {
 }
 
 function setupTextScrambleLoops() {
-  // Profil name: 3s
-  setInterval(() => {
-    if (appData && appData.profile) {
-      animateScrambleText(DOM.profileName, appData.profile.name, 1000);
-    }
-  }, 3000);
+  // Profil name: V4 Animation is handled by updateProfileUI
+  // (We don't need a loop interval here since the V4 animation has loop: true)
   
   // Timer Label: 5s
   setInterval(() => {
@@ -1175,7 +1173,7 @@ async function changeQuote() {
 
 // --- Profile ---
 function updateProfileUI() {
-  animateScrambleText(DOM.profileName, appData.profile.name, 1000);
+  animateProfileNameV4();
   animateScrambleText(DOM.statSessions, appData.profile.totalSessions.toString(), 800);
   
   const hours = Math.floor(appData.profile.totalTime / 60);
@@ -1815,10 +1813,17 @@ function setupEventListeners() {
     });
   });
   
+  DOM.profileName.addEventListener('focus', () => {
+    if (window.nameAnimationV4) {
+      window.nameAnimationV4.pause();
+    }
+    DOM.profileName.innerHTML = appData.profile.name; // Restore plain text for editing
+  });
+
   DOM.profileName.addEventListener('blur', () => {
-    appData.profile.name = DOM.profileName.textContent;
+    appData.profile.name = DOM.profileName.textContent.trim() || 'User';
     saveData();
-    updateProfileUI();
+    animateProfileNameV4();
   });
   DOM.profileName.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); DOM.profileName.blur(); } });
   
@@ -2043,3 +2048,36 @@ function setupScrollReveal() {
     observer.observe(el);
   });
 }
+
+window.nameAnimationV4 = null;
+function animateProfileNameV4() {
+  if (window.nameAnimationV4) {
+    window.nameAnimationV4.pause();
+  }
+  
+  if (document.activeElement === DOM.profileName) return;
+  
+  DOM.profileName.innerHTML = appData.profile.name;
+  
+  try {
+    const { chars } = splitText(DOM.profileName, { words: false, chars: true });
+    
+    window.nameAnimationV4 = animate(chars, {
+      y: [
+        { to: '-2.75rem', ease: 'outExpo', duration: 600 },
+        { to: 0, ease: 'outBounce', duration: 800, delay: 100 }
+      ],
+      rotate: {
+        from: '-1turn',
+        delay: 0
+      },
+      delay: stagger(50),
+      ease: 'inOutCirc',
+      loopDelay: 1000,
+      loop: true
+    });
+  } catch(e) {
+    console.warn("Anime v4 error:", e);
+  }
+}
+
