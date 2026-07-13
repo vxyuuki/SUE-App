@@ -385,6 +385,16 @@ window.t = function(key) {
         }
       });
     });
+    
+    // Anime.js stagger for flashcards
+    anime({
+      targets: '.flashcard-item',
+      translateX: [20, 0],
+      opacity: [0, 1],
+      delay: anime.stagger(40),
+      easing: 'easeOutQuad',
+      duration: 500
+    });
   }
   
   function startStudySession() {
@@ -596,6 +606,42 @@ async function init() {
       Notification.requestPermission();
     }
   }
+
+  applyGlobalAnimations();
+}
+
+function applyGlobalAnimations() {
+  // Add a nice global button click animation using Anime.js
+  document.querySelectorAll('.btn, button').forEach(btn => {
+    btn.addEventListener('mousedown', () => {
+      anime({
+        targets: btn,
+        scale: 0.95,
+        duration: 150,
+        easing: 'easeOutQuad'
+      });
+    });
+    const resetAnim = () => {
+      anime({
+        targets: btn,
+        scale: 1,
+        duration: 400,
+        easing: 'easeOutElastic(1, .5)'
+      });
+    };
+    btn.addEventListener('mouseup', resetAnim);
+    btn.addEventListener('mouseleave', resetAnim);
+  });
+  
+  // Add subtle float animation to the profile avatar
+  anime({
+    targets: ['.avatar-wrapper img', '.avatar-wrapper .avatar-fallback'],
+    translateY: [-3, 3],
+    loop: true,
+    direction: 'alternate',
+    easing: 'easeInOutSine',
+    duration: 2500
+  });
 
   // Anime.js On-Scroll Animations using Intersection Observer
   const scrollElements = document.querySelectorAll('.Box.mt-3, .graph-container, .calendar-container');
@@ -1444,6 +1490,16 @@ function renderNotes(filterDate = null) {
       else openNoteEditor(note);
     });
     DOM.notesList.appendChild(card);
+  });
+  
+  // Stagger animation for rendered notes
+  anime({
+    targets: '.note-card',
+    translateY: [20, 0],
+    opacity: [0, 1],
+    delay: anime.stagger(50),
+    easing: 'easeOutQuart',
+    duration: 600
   });
 }
 
