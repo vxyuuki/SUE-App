@@ -609,6 +609,7 @@ async function init() {
   applyGlobalAnimations();
   setupTextScrambleLoops();
   initAuroraBackground();
+  setupScrollReveal();
 }
 
 function setupTextScrambleLoops() {
@@ -825,16 +826,51 @@ function showNotification(title, body) {
 // --- Navigation ---
 
 function switchView(viewId) {
+  if (currentView === viewId) return;
+
   DOM.navBtns.forEach(btn => {
     if (btn.dataset.view === viewId) btn.classList.add('active');
     else btn.classList.remove('active');
   });
+
+  const oldView = document.querySelector('.view.active');
+  const newView = document.getElementById(`view-${viewId}`);
   
-  DOM.views.forEach(view => {
-    if (view.id === `view-${viewId}`) {
-      view.classList.add('active');
-      view.style.display = 'block'; // Make sure display is block before animating
-      // Anime.js Tab Switch Animation
+  if (oldView && oldView !== newView) {
+    anime({
+      targets: oldView,
+      opacity: [1, 0],
+      translateY: [0, -10],
+      duration: 300,
+      easing: 'easeInQuad',
+      complete: () => {
+        oldView.classList.remove('active');
+        oldView.style.display = 'none';
+        showNewView(newView);
+      }
+    });
+  } else {
+    showNewView(newView);
+  }
+
+  function showNewView(view) {
+    view.classList.add('active');
+    view.style.display = 'block';
+    
+    const innerElements = view.querySelectorAll('.Box, .SegmentedControl, .flashcard-deck, .note-card, .chart-container, .graph-panel');
+    if (innerElements.length > 0) {
+      innerElements.forEach(el => el.style.opacity = '0');
+      view.style.opacity = 1;
+      view.style.transform = 'none';
+      anime({
+        targets: innerElements,
+        opacity: [0, 1],
+        translateY: [30, 0],
+        duration: 800,
+        delay: anime.stagger(50),
+        easing: 'easeOutQuart'
+      });
+    } else {
       anime({
         targets: view,
         opacity: [0, 1],
@@ -842,12 +878,9 @@ function switchView(viewId) {
         duration: 600,
         easing: 'easeOutExpo'
       });
-    } else {
-      view.classList.remove('active');
-      view.style.display = 'none';
-      view.style.opacity = 0;
     }
-  });
+  }
+
   currentView = viewId;
   
   // Re-scroll graph if switching to timer
@@ -1984,5 +2017,29 @@ function initAuroraBackground() {
       });
     }
     animateBlob();
+  });
+}
+
+function setupScrollReveal() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        anime({
+          targets: entry.target,
+          opacity: [0, 1],
+          translateY: [40, 0],
+          duration: 1000,
+          easing: 'easeOutQuart'
+        });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  
+  // Apply only to elements that are explicitly marked for scroll reveal, or deep inside lists
+  const scrollElements = document.querySelectorAll('.flashcard-deck:nth-child(n+4), .note-card:nth-child(n+5)');
+  scrollElements.forEach(el => {
+    el.style.opacity = '0';
+    observer.observe(el);
   });
 }
