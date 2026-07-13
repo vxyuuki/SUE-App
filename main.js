@@ -855,10 +855,12 @@ function setTimerType(type) {
   
   // Colors mapped to GitHub success/accent
   const timerCircle = document.getElementById('timer-progress');
-  if (type === 'focus') {
-    timerCircle.style.stroke = 'var(--color-success-fg)';
-  } else {
-    timerCircle.style.stroke = 'var(--color-accent-fg)';
+  if (timerCircle) {
+    if (type === 'focus') {
+      timerCircle.style.stroke = 'var(--color-success-fg)';
+    } else {
+      timerCircle.style.stroke = 'var(--color-accent-fg)';
+    }
   }
   
   // Anime.js pop animation for the timer
