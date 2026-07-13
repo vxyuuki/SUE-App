@@ -848,7 +848,7 @@ function setTimerType(type) {
   });
   
   const labels = { 'focus': 'FOKUS', 'short_break': 'ISTIRAHAT', 'long_break': 'LONG BREAK' };
-  DOM.timerLabel.textContent = labels[type];
+  animateScrambleText(DOM.timerLabel, labels[type] || 'TIMER', 800);
   
   updateTimerDisplay();
   changeQuote();
@@ -1015,24 +1015,28 @@ function updateSessionDots() {
 }
 
 // --- SplitText Helper ---
-function animateSplitText(element) {
-  const text = element.textContent;
-  element.innerHTML = '';
-  text.split(' ').forEach((word, i) => {
-    const wordSpan = document.createElement('span');
-    wordSpan.style.display = 'inline-block';
-    wordSpan.style.whiteSpace = 'pre';
-    wordSpan.textContent = word + ' ';
-    element.appendChild(wordSpan);
-  });
+function animateScrambleText(element, finalString, duration = 1200) {
+  const chars = '!<>-_\\\\/[]{}—=+*^?#________';
+  const length = finalString.length;
+  const obj = { p: 0 };
   
+  anime.remove(obj);
   anime({
-    targets: element.querySelectorAll('span'),
-    translateY: [20, 0],
-    opacity: [0, 1],
-    duration: 800,
-    delay: anime.stagger(50),
-    easing: 'easeOutQuint'
+    targets: obj,
+    p: 1,
+    duration: duration,
+    easing: 'linear',
+    update: function() {
+      let currentString = '';
+      for (let i = 0; i < length; i++) {
+        if (i < Math.floor(obj.p * length)) {
+          currentString += finalString[i];
+        } else {
+          currentString += chars[Math.floor(Math.random() * chars.length)];
+        }
+      }
+      element.textContent = currentString;
+    }
   });
 }
 
@@ -1059,21 +1063,11 @@ async function changeQuote() {
       duration: 300,
       easing: 'linear',
       complete: function() {
-        DOM.quoteText.textContent = `"${q.text}"`;
-        DOM.quoteAuthor.textContent = `— ${q.author || 'Unknown'}`;
-        DOM.quoteAuthor.style.opacity = '0';
+        DOM.quoteAuthor.style.opacity = '1';
         DOM.quoteText.style.opacity = '1';
         
-        animateSplitText(DOM.quoteText);
-        
-        anime({
-          targets: DOM.quoteAuthor,
-          opacity: [0, 1],
-          translateY: [10, 0],
-          delay: 600,
-          duration: 800,
-          easing: 'easeOutExpo'
-        });
+        animateScrambleText(DOM.quoteText, `"${q.text}"`, 1500);
+        animateScrambleText(DOM.quoteAuthor, `— ${q.author || 'Unknown'}`, 1200);
       }
     });
   } catch (error) {
@@ -1086,15 +1080,16 @@ async function changeQuote() {
 
 // --- Profile ---
 function updateProfileUI() {
-  DOM.profileName.textContent = appData.profile.name;
-  DOM.statSessions.textContent = appData.profile.totalSessions;
+  animateScrambleText(DOM.profileName, appData.profile.name, 1000);
+  animateScrambleText(DOM.statSessions, appData.profile.totalSessions.toString(), 800);
   
   const hours = Math.floor(appData.profile.totalTime / 60);
   const mins = appData.profile.totalTime % 60;
-  DOM.statTime.textContent = hours > 0 ? `${hours}j ${mins}m` : `${mins}m`;
+  const timeStr = hours > 0 ? `${hours}j ${mins}m` : `${mins}m`;
+  animateScrambleText(DOM.statTime, timeStr, 800);
   
-  DOM.statCurrentStreak.textContent = appData.profile.currentStreak;
-  DOM.statLongestStreak.textContent = appData.profile.longestStreak;
+  animateScrambleText(DOM.statCurrentStreak, appData.profile.currentStreak.toString(), 800);
+  animateScrambleText(DOM.statLongestStreak, appData.profile.longestStreak.toString(), 800);
   
   const fbText = appData.profile.name.charAt(0).toUpperCase();
   DOM.avatarFallback.textContent = fbText;
