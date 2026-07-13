@@ -21,6 +21,7 @@
   <img src="https://img.shields.io/badge/Vanilla_JS-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="Vanilla JS" />
   <img src="https://img.shields.io/badge/GitHub_Primer-24292F?style=for-the-badge&logo=github&logoColor=white" alt="Primer CSS" />
   <img src="https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white" alt="Chart.js" />
+  <img src="https://img.shields.io/badge/Anime.js-2A2B38?style=for-the-badge&logo=anime&logoColor=white" alt="Anime.js" />
 </p>
 
 ## ✨ About The Project
@@ -42,11 +43,13 @@ All data is stored **100% locally** on your machine. No internet connection requ
 - 🗂️ **Spaced Repetition Flashcards**
   - Organize your learning materials into custom Folders (Decks).
   - Tinder-like swipe mechanics (Left for "Forgot", Right for "Remembered") for studying.
-- 🎨 **Aesthetics & Motivation**
-  - GitHub-inspired UI with toggleable Dark and Light mode themes.
+- 🎨 **Aesthetics & Motivation (Awwwards-Style)**
+  - GitHub-inspired UI elevated with **Glassmorphism** panels and an animated **Aurora Mesh Gradient** background.
+  - Cyber-minimalist **dynamic text scrambling** loops powered by Anime.js.
+  - Toggleable Dark and Light mode themes that seamlessly adapt the aurora background colors.
   - 🌐 **Bilingual Support (ID/EN)**: Seamlessly switch between Bahasa Indonesia and English interfaces.
   - **IndexedDB-powered profiles** supporting high-quality animated GIFs (up to 25MB).
-  - Built-in library of 2000+ local offline motivational quotes.
+  - Built-in library of 2000+ local offline motivational quotes that dynamically refresh.
 
 ## 🛠️ Installation & Setup
 
@@ -80,7 +83,8 @@ To run SUE locally on your machine:
 
 - **Framework:** Electron & Vite
 - **UI & Styling:** Vanilla HTML/CSS, GitHub Primer CSS
-- **Data Storage:** Local JSON Storage (`userData` directory)
+- **Animations:** Anime.js
+- **Data Storage:** Local JSON Storage & IndexedDB (`userData` directory)
 
 ---
 <div align="center">
