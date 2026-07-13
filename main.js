@@ -598,8 +598,8 @@ async function init() {
   renderNotes();
   setTimerType('focus');
   changeQuote();
-  setInterval(changeQuote, 15000);
-  if (window.applyLanguage) window.applyLanguage(); // Ganti kata motivasi setiap 15 detik (via API)
+  setInterval(changeQuote, 7000);
+  if (window.applyLanguage) window.applyLanguage(); // Ganti kata motivasi setiap 7 detik (via API)
   
   if (appData.settings.notifications && 'Notification' in window) {
     if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
