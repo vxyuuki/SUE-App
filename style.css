@@ -24,9 +24,9 @@
   --color-calendar-graph-day-L4-bg: #39d353;
   
   /* Anime Timer Widget (Dark Theme) */
-  --timer-widget-bg: #1e1e24;
+  --timer-widget-bg: transparent;
   --timer-widget-box-bg: #121215;
-  --timer-widget-text: #fb923c; /* Energetic Orange */
+  --timer-widget-text: #ffffff; /* White for Dark */
   --timer-widget-label: #94a3b8;
 }
 
@@ -54,9 +54,9 @@
   --color-calendar-graph-day-L4-bg: #216e39;
 
   /* Anime Timer Widget (Light Theme) */
-  --timer-widget-bg: #f8fafc;
+  --timer-widget-bg: transparent;
   --timer-widget-box-bg: #ffffff;
-  --timer-widget-text: #4f46e5; /* Professional Indigo */
+  --timer-widget-text: #000000; /* Black for Light */
   --timer-widget-label: #64748b;
 }
 
@@ -948,6 +948,7 @@ body.mini-mode #btn-mini-mode-restore {
 }
 .anime-widget-box {
   background-color: var(--timer-widget-box-bg);
+  border: 1px solid var(--color-border-default);
   border-radius: 8px;
   padding: 12px;
   flex: 1;
