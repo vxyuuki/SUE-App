@@ -22,6 +22,12 @@
   --color-calendar-graph-day-L2-bg: #006d32;
   --color-calendar-graph-day-L3-bg: #26a641;
   --color-calendar-graph-day-L4-bg: #39d353;
+  
+  /* Anime Timer Widget (Dark Theme) */
+  --timer-widget-bg: #1e1e24;
+  --timer-widget-box-bg: #121215;
+  --timer-widget-text: #fb923c; /* Energetic Orange */
+  --timer-widget-label: #94a3b8;
 }
 
 [data-theme="light"] {
@@ -46,6 +52,12 @@
   --color-calendar-graph-day-L2-bg: #40c463;
   --color-calendar-graph-day-L3-bg: #30a14e;
   --color-calendar-graph-day-L4-bg: #216e39;
+
+  /* Anime Timer Widget (Light Theme) */
+  --timer-widget-bg: #f8fafc;
+  --timer-widget-box-bg: #ffffff;
+  --timer-widget-text: #4f46e5; /* Professional Indigo */
+  --timer-widget-label: #64748b;
 }
 
 * {
@@ -911,12 +923,13 @@ body.mini-mode #btn-mini-mode-restore {
 
 /* Anime.js Timer Widget Style */
 .anime-widget-container {
-  background-color: #3e2a23;
+  background-color: var(--timer-widget-bg);
   border-radius: 12px;
   padding: 16px;
   width: 100%;
   max-width: 380px;
   font-family: 'Courier New', Courier, monospace;
+  transition: background-color 0.3s ease;
 }
 .anime-widget-header {
   display: flex;
@@ -925,7 +938,7 @@ body.mini-mode #btn-mini-mode-restore {
   margin-bottom: 16px;
 }
 .anime-widget-title {
-  color: #ff7e33;
+  color: var(--timer-widget-text);
   font-size: 16px;
   font-weight: bold;
 }
@@ -934,21 +947,22 @@ body.mini-mode #btn-mini-mode-restore {
   gap: 12px;
 }
 .anime-widget-box {
-  background-color: #553424;
+  background-color: var(--timer-widget-box-bg);
   border-radius: 8px;
   padding: 12px;
   flex: 1;
   text-align: right;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease;
 }
 .anime-widget-label {
-  color: #c45b23;
+  color: var(--timer-widget-label);
   font-size: 14px;
   margin-bottom: 8px;
   text-align: left;
 }
 .anime-widget-value {
-  color: #ff7e33;
+  color: var(--timer-widget-text);
   font-size: 32px;
   font-weight: bold;
 }

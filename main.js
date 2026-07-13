@@ -829,17 +829,32 @@ function setTimerType(type) {
   }
 }
 
+let timerMsAnimation = null;
 function updateTimerDisplay() {
   const m = Math.floor(timerState.timeLeft / 60);
   const s = timerState.timeLeft % 60;
-  DOM.timerTime.textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  const timeStr = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   
-  const totalOffset = 722.566;
-  const progress = timerState.timeLeft / timerState.totalTime;
-  DOM.timerProgress.style.strokeDashoffset = totalOffset - (progress * totalOffset);
+  if (timerState.status === 'running') {
+    if (timerMsAnimation) timerMsAnimation.pause();
+    let msObj = { val: 99 };
+    timerMsAnimation = anime({
+      targets: msObj,
+      val: 0,
+      duration: 1000,
+      easing: 'linear',
+      round: 1,
+      update: function() {
+        DOM.timerTime.textContent = `${timeStr}.${msObj.val.toString().padStart(2, '0')}`;
+      }
+    });
+  } else {
+    if (timerMsAnimation) timerMsAnimation.pause();
+    DOM.timerTime.textContent = timeStr;
+  }
   
   const typeStr = timerState.type === 'focus' ? 'Fokus' : 'Break';
-  document.title = `${DOM.timerTime.textContent} - ${typeStr} | SUE`;
+  document.title = `${timeStr} - ${typeStr} | SUE`;
 }
 
 function toggleTimer() {
