@@ -607,6 +607,54 @@ async function init() {
   }
 
   applyGlobalAnimations();
+  setupTextScrambleLoops();
+}
+
+function setupTextScrambleLoops() {
+  // Profil name: 3s
+  setInterval(() => {
+    if (appData && appData.profile) {
+      animateScrambleText(DOM.profileName, appData.profile.name, 1000);
+    }
+  }, 3000);
+  
+  // Timer Label: 5s
+  setInterval(() => {
+    const labels = { 'focus': 'FOKUS', 'short_break': 'ISTIRAHAT', 'long_break': 'LONG BREAK' };
+    const text = labels[timerState.type] || 'TIMER';
+    animateScrambleText(DOM.timerLabel, text, 800);
+  }, 5000);
+  
+  // Stats: 10s
+  setInterval(() => {
+    if (appData && appData.profile) {
+      animateScrambleText(DOM.statSessions, appData.profile.totalSessions.toString(), 800);
+      const hours = Math.floor(appData.profile.totalTime / 60);
+      const mins = appData.profile.totalTime % 60;
+      const timeStr = hours > 0 ? `${hours}j ${mins}m` : `${mins}m`;
+      animateScrambleText(DOM.statTime, timeStr, 800);
+      animateScrambleText(DOM.statCurrentStreak, appData.profile.currentStreak.toString(), 800);
+      animateScrambleText(DOM.statLongestStreak, appData.profile.longestStreak.toString(), 800);
+    }
+  }, 10000);
+
+  // App Title: 4s
+  const appTitle = document.querySelector('.AppHeader-title');
+  if (appTitle) {
+    setInterval(() => {
+      animateScrambleText(appTitle, 'SUE', 800);
+    }, 4000);
+  }
+
+  // Headings (Catatan, Statistik, Flashcard, Pomodoro Timer): 8s
+  const headings = document.querySelectorAll('h3.Box-title, h2.h4');
+  setInterval(() => {
+    headings.forEach(h => {
+      const originalText = h.getAttribute('data-text') || h.textContent.trim();
+      h.setAttribute('data-text', originalText);
+      animateScrambleText(h, originalText, 800);
+    });
+  }, 8000);
 }
 
 function applyGlobalAnimations() {
